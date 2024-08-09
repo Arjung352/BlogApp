@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.active {
+  color: #3f66dd;
+  text-decoration: underline #3f66dd;
+}
