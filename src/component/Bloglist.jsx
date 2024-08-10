@@ -133,9 +133,9 @@ const Bloglist = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search blogs..."
-            className="ml-4 border border-black"
+            className="ml-4 border border-black rounded-lg p-2 "
           />
-          <button type="submit" className="ml-2 text-lightblue">
+          <button type="submit" className="ml-2 text-lightBlue ">
             Search
           </button>
         </form>
@@ -177,7 +177,13 @@ const Bloglist = () => {
                     setBlogs={setBlogs}
                   />
                 ) : (
-                  <LikeBlogButton />
+                  <button
+                    onClick={() => {
+                      toast.warn("Sign-In to like this post");
+                    }}
+                  >
+                    <LikeBlogButton />
+                  </button>
                 )}
                 <p>
                   {blog.likes ? (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import fb from "../Firebase";
 import UseAuthState from "./hooks/hooks";
 import { useNavigate } from "react-router";
-
+import { ToastContainer, toast } from "react-toastify";
 const DB = fb.firestore();
 const BlogsList = DB.collection("blogs");
 const storageRef = fb.storage().ref();
@@ -30,6 +30,11 @@ const Create = () => {
   const submit = (e) => {
     e.preventDefault();
 
+    if (!user) {
+      toast.error("You must be signed in to create a blog.");
+      return;
+    }
+
     if (coverImg) {
       const uploadTask = storageRef
         .child("images/" + coverImg.name)
@@ -38,7 +43,7 @@ const Create = () => {
         "state_changed",
         (snapshot) => {},
         (error) => {
-          console.error("Upload error: ", error);
+          toast.error("Upload error: " + error.message);
         },
         () => {
           storageRef
@@ -48,7 +53,10 @@ const Create = () => {
               addBlogPost(url);
             })
             .catch((error) => {
-              alert("Encountered an error while uploading the image: ", error);
+              toast.error(
+                "Encountered an error while uploading the image: " +
+                  error.message
+              );
             });
         }
       );
@@ -70,11 +78,10 @@ const Create = () => {
         setBody("");
         setCoverImg(null);
         setPreviewUrl(null);
-        alert("Data Submitted Successfully");
         redirect("/");
       })
       .catch((error) => {
-        alert("Encountered an Error: ", error);
+        toast.error("Encountered an Error: ", error);
       });
   };
 
@@ -161,6 +168,9 @@ const Create = () => {
             </button>
           </form>
         </div>
+      </div>
+      <div>
+        <ToastContainer />
       </div>
     </div>
   );
