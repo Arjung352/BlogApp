@@ -60,7 +60,7 @@ function Navbar() {
     <>
       {/* Overlay Navbar */}
       <div
-        className={`w-screen h-screen min-h-screen overflow-y-hidden bg-black inset-0 flex flex-col justify-between transform transition-transform ${
+        className={`w-screen h-screen min-h-screen fixed top-0 left-0 overflow-y-hidden bg-black inset-0 flex flex-col justify-between transform transition-transform ${
           visible ? "translate-x-0" : "translate-x-full"
         }`}
         style={{ position: "fixed", zIndex: 10 }}
