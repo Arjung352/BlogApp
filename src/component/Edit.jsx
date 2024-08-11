@@ -2,6 +2,9 @@ import fb from "../Firebase";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const DB = fb.firestore();
 const BlogsList = DB.collection("blogs");
 const EditBlog = () => {
@@ -60,7 +63,7 @@ const EditBlog = () => {
             />
             <label className="block text-lg font-semibold mb-4">Content</label>
 
-            <textarea
+            {/* <textarea
               name="content"
               type="text"
               placeholder="Write your content here"
@@ -71,8 +74,14 @@ const EditBlog = () => {
                 setBody(e.target.value);
               }}
               required
-            ></textarea>
-
+            ></textarea> */}
+            <ReactQuill
+              name="content"
+              theme="snow"
+              value={body}
+              required
+              onChange={(content) => setBody(content)}
+            />
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
