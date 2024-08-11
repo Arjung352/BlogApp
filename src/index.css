@@ -5,3 +5,9 @@
   color: #3f66dd;
   text-decoration: underline #3f66dd;
 }
+html {
+  height: -webkit-fill-available;
+}
+body {
+  height: -webkit-fill-available;
+}
