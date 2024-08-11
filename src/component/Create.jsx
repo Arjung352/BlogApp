@@ -3,6 +3,8 @@ import fb from "../Firebase";
 import UseAuthState from "./hooks/hooks";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const DB = fb.firestore();
 const BlogsList = DB.collection("blogs");
 const storageRef = fb.storage().ref();
@@ -109,7 +111,6 @@ const Create = () => {
               value={title}
               required
             />
-
             <label className="block text-lg font-semibold mb-4">
               Upload an Image
             </label>
@@ -148,9 +149,8 @@ const Create = () => {
                 <p className="text-blue-500">Browse files</p>
               </div>
             </div>
-
             <label className="block text-lg font-semibold mb-4">Content</label>
-            <textarea
+            {/* <textarea
               name="content"
               placeholder="Write your content here"
               rows="3"
@@ -158,8 +158,12 @@ const Create = () => {
               value={body}
               onChange={(e) => setBody(e.target.value)}
               required
-            ></textarea>
-
+            ></textarea> */}
+            <ReactQuill
+              theme="snow"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+            />
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
