@@ -160,9 +160,11 @@ const Create = () => {
               required
             ></textarea> */}
             <ReactQuill
+              name="content"
               theme="snow"
               value={body}
-              onChange={(e) => setBody(e.target.value)}
+              required
+              onChange={(content) => setBody(content)}
             />
             <button
               type="submit"

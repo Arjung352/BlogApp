@@ -73,8 +73,11 @@ const ShowBlog = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-4 capitalize">
             {blog.Title}
           </h1>
-          <p className="text-gray-700 leading-relaxed mb-6">{blog.Body}</p>
-
+          <div
+            className="text-gray-700 leading-relaxed mb-6"
+            dangerouslySetInnerHTML={{ __html: blog.Body }}
+          />
+          {console.log(blog.Body)}
           <div className="flex items-center justify-between">
             {user && <LikeBlogButton id={id} likes={blog.likes} />}
             <p className="text-gray-600">
