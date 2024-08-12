@@ -1,13 +1,14 @@
 import fb from "../../Firebase";
 import UseAuthState from "../../component/hooks/hooks";
-import { getAuth, signOut } from "Firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { TailSpin } from "react-loader-spinner";
 import { NavLink, Outlet } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 function Navbar() {
   const [visible, setVisible] = useState(false);
   const { user, initializing } = UseAuthState(fb.auth());
@@ -29,11 +30,24 @@ function Navbar() {
     fb.auth().useDeviceLanguage();
     try {
       await fb.auth().signInWithPopup(provider);
-      toast.success("Signed-In Succesfully");
+      toast.success("Signed-In Successfully");
     } catch (error) {
-      toast.error("Error during sign-in:", error.message);
+      toast.error("Error during sign-in: " + error.message);
     }
   };
+
+  useEffect(() => {
+    if (visible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup function to reset overflow style when the component unmounts
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [visible]);
 
   if (initializing) {
     return (
