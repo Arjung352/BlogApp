@@ -1,5 +1,4 @@
 import fb from "../../Firebase";
-import UseAuthState from "../../component/hooks/hooks";
 import { getAuth, signOut } from "firebase/auth";
 import { TailSpin } from "react-loader-spinner";
 import { NavLink, Outlet } from "react-router-dom";
@@ -10,32 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Navbar() {
-  const [visible, setVisible] = useState(false);
-  const { user, initializing } = UseAuthState(fb.auth());
-
-  const auth = getAuth();
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        toast.success("Signed out successfully");
-      })
-      .catch((error) => {
-        toast.error("An error occurred: " + error.message);
-      });
-  };
-
-  const signinGoogle = async () => {
-    const provider = new fb.auth.GoogleAuthProvider();
-    fb.auth().useDeviceLanguage();
-    try {
-      await fb.auth().signInWithPopup(provider);
-      toast.success("Signed-In Successfully");
-    } catch (error) {
-      toast.error("Error during sign-in: " + error.message);
-    }
-  };
-
   useEffect(() => {
     if (visible) {
       document.body.style.overflow = "hidden";
@@ -48,23 +21,6 @@ function Navbar() {
       document.body.style.overflow = "";
     };
   }, [visible]);
-
-  if (initializing) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <TailSpin
-          height="80"
-          width="80"
-          color="#3f66dd"
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
-      </div>
-    );
-  }
 
   const handleNavbar = () => {
     setVisible(!visible);

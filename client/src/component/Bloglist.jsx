@@ -1,112 +1,31 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import fb from "../Firebase";
 import UseAuthState from "./hooks/hooks";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import PersonIcon from "@mui/icons-material/Person";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { ToastContainer, toast } from "react-toastify";
-const DB = fb.firestore();
-const Blogs = DB.collection("blogs");
 
 const Bloglist = () => {
-  const { user } = UseAuthState(fb.auth());
-  const [blogslist, setBlogs] = useState([]);
-  const [error, setError] = useState(null);
-  const [search, setSearch] = useState("");
-  const navigate = useNavigate();
-
   const redirectToAbout = () => {
     navigate("/aboutme");
   };
 
-  const LikeBlogButton = ({ id, likes, blogslist, setBlogs }) => {
-    const handleLikes = () => {
-      const newLikes = likes?.includes(user.uid)
-        ? fb.firestore.FieldValue.arrayRemove(user.uid)
-        : fb.firestore.FieldValue.arrayUnion(user.uid);
-
-      Blogs.doc(id).update({
-        likes: newLikes,
-      });
-
-      const updatedBlogs = blogslist.map((blog) => {
-        if (blog.id === id) {
-          const updatedLikes = likes?.includes(user.uid)
-            ? likes.filter((uid) => uid !== user.uid)
-            : [...(likes || []), user.uid];
-          return { ...blog, likes: updatedLikes };
-        }
-        return blog;
-      });
-
-      setBlogs(updatedBlogs);
-    };
-
-    return (
-      <div>
-        {likes?.includes(user.uid) ? (
-          <button onClick={handleLikes}>
-            <ThumbUpIcon className=" text-lightBlue" />
-          </button>
-        ) : (
-          <button onClick={handleLikes}>
-            <ThumbUpIcon />
-          </button>
-        )}
-      </div>
-    );
-  };
-
-  const fetchBlogs = async (searchTerm = "") => {
-    setError(null);
-
-    let query = Blogs.limit(100);
-
-    if (searchTerm) {
-      query = query
-        .where("Title", ">=", searchTerm)
-        .where("Title", "<=", searchTerm + "\uf8ff");
-    }
-
-    try {
-      const querySnapshot = await query.get();
-      const data = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setBlogs(data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
-  const searchBlog = (e) => {
-    e.preventDefault();
-    fetchBlogs(search);
-  };
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  const deleteBlog = (id) => {
-    Blogs.doc(id)
-      .delete()
-      .then(() => {
-        toast.success("Document successfully deleted!");
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
-      })
-      .catch((error) => {
-        toast.error("Error removing document: ", error);
-      });
-  };
+  // return (
+  //   <div>
+  //     {likes?.includes(user.uid) ? (
+  //       <button onClick={handleLikes}>
+  //         <ThumbUpIcon className=" text-lightBlue" />
+  //       </button>
+  //     ) : (
+  //       <button onClick={handleLikes}>
+  //         <ThumbUpIcon />
+  //       </button>
+  //     )}
+  //   </div>
+  // );
 
   return (
     <div className="font-worksans">
