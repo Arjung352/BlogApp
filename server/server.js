@@ -14,8 +14,9 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Database Connected sucessfully");
-    console.log(`Backend listning at port ${process.env.PORT}`);
-    app.listen(process.env.PORT, () => {});
+    app.listen(process.env.PORT, () => {
+      console.log(`Backend listning at port ${process.env.PORT}`);
+    });
   })
   .catch(() => {
     console.log("error connecting to database");
