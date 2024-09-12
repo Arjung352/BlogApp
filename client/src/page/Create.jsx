@@ -1,103 +1,71 @@
-import React, { useState } from "react";
-import fb from "../Firebase";
-import UseAuthState from "./hooks/hooks";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-const DB = fb.firestore();
-const BlogsList = DB.collection("blogs");
-const storageRef = fb.storage().ref();
+import axios from "axios";
 
 const Create = () => {
   const redirect = useNavigate();
-  const { user, initializing } = UseAuthState(fb.auth());
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [coverImg, setCoverImg] = useState(null);
+  const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
+  // Handle file upload and preview
   const handleCoverImg = (e) => {
     const file = e.target.files[0];
+    setImage(file);
+
+    // Preview the image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewUrl(reader.result);
+    };
     if (file) {
-      setCoverImg(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
-      };
       reader.readAsDataURL(file);
     }
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
 
-    if (!user) {
-      toast.error("You must be signed in to create a blog.");
-      return;
+    // Create form data to handle file upload
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("desc", body); // Assuming 'desc' is for the blog content/body
+    if (image) {
+      formData.append("img", image);
     }
+    formData.append("username", localStorage.getItem("username")); // Replace with the actual username
 
-    if (coverImg) {
-      const uploadTask = storageRef
-        .child("images/" + coverImg.name)
-        .put(coverImg);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {},
-        (error) => {
-          toast.error("Upload error: " + error.message);
-        },
-        () => {
-          storageRef
-            .child("images/" + coverImg.name)
-            .getDownloadURL()
-            .then((url) => {
-              addBlogPost(url);
-            })
-            .catch((error) => {
-              toast.error(
-                "Encountered an error while uploading the image: " +
-                  error.message
-              );
-            });
+    try {
+      const response = await axios.post(
+        "http://localhost:1000/blog/create-blog",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-    } else {
-      addBlogPost(null);
+
+      // Handle successful response
+      toast.success("Blog created successfully!");
+      redirect("/home"); // Redirect to homepage or another page after successful submission
+    } catch (error) {
+      console.error("Error creating blog:", error.response.data);
+      toast.error("Failed to create blog. Please try again.");
     }
   };
-
-  const addBlogPost = (imageUrl) => {
-    BlogsList.add({
-      Title: title,
-      Body: body,
-      CoverImg: imageUrl || "", // Store an empty string if no image URL
-      author: user.uid,
-      authorName: user.displayName,
-    })
-      .then((docRef) => {
-        setTitle("");
-        setBody("");
-        setCoverImg(null);
-        setPreviewUrl(null);
-        redirect("/");
-      })
-      .catch((error) => {
-        toast.error("Encountered an Error: ", error);
-      });
-  };
-
-  if (initializing) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
     <div>
       <p className="font-worksans text-4xl text-center font-medium pt-8">
         Create a Blog
       </p>
-      <div className=" flex justify-center mt-8">
-        <div className=" w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
+      <div className="flex justify-center mt-8">
+        <div className="w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
           <form
             onSubmit={submit}
             className="bg-white p-8 rounded-lg shadow-md border border-black font-worksans shadow-black w-full h-full"
@@ -150,15 +118,6 @@ const Create = () => {
               </div>
             </div>
             <label className="block text-lg font-semibold mb-4">Content</label>
-            {/* <textarea
-              name="content"
-              placeholder="Write your content here"
-              rows="3"
-              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              required
-            ></textarea> */}
             <ReactQuill
               name="content"
               theme="snow"

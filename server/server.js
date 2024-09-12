@@ -3,10 +3,12 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userApi = require("./route/userApi");
+const blogApi = require("./route/blogApi");
 app.use(express.json());
 require("dotenv").config();
 app.use(cors());
-app.use("/api", userApi);
+app.use("/register", userApi);
+app.use("/blog", blogApi);
 app.get("/", (req, res) => {
   res.json({ message: "Hey There!" });
 });

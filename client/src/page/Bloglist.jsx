@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import UseAuthState from "./hooks/hooks";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import PersonIcon from "@mui/icons-material/Person";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const Bloglist = () => {
+  const navigate = useNavigate();
   const redirectToAbout = () => {
     navigate("/aboutme");
   };
-
+  const [data, setData] = useState([]);
   // return (
   //   <div>
   //     {likes?.includes(user.uid) ? (
@@ -27,6 +28,17 @@ const Bloglist = () => {
   //   </div>
   // );
 
+  useEffect(() => {
+    const fetchData = (async () => {
+      try {
+        const data = await axios.get("http://localhost:1000/blog/display-all");
+        console.log(data.data.data);
+        setData(data.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
   return (
     <div className="font-worksans">
       <div className=" h-2/5 bg-black w-full text-white flex pt-8 flex-col justify-center items-center font-worksans">
@@ -46,11 +58,11 @@ const Bloglist = () => {
         </button>
       </div>
       <div className="flex justify-center items-center relative mt-4 ">
-        <form onSubmit={searchBlog} className="absolute left-0 max-sm:top-14">
+        <form className="absolute left-0 max-sm:top-14">
           <input
             type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            // value={}
+            // onChange={(e) => setSearch(e.target.value)}
             placeholder="Search blogs..."
             className="ml-4 border border-black rounded-lg p-2 "
           />
@@ -62,32 +74,27 @@ const Bloglist = () => {
           All Blogs
         </h2>
       </div>
+      {/* Bloglist */}
       <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 mb-4 mt-8">
-        {blogslist.map((blog) => (
+        {data.map((blog, index) => (
           <div
-            key={blog.id}
-            className="flex flex-col bg-gradient-to-b from-gray-300 to-white mb-8  justify-end shadow-md rounded-md hover:scale-105 transition-all ease-in-out duration-300 shadow-black p-4 mx-4"
+            key={index}
+            className="flex flex-col bg-gradient-to-b from-gray-300 to-white mb-8  justify-end rounded-2xl hover:scale-105 transition-all ease-in-out duration-300 p-4 mx-4"
           >
-            {blog.CoverImg ? (
-              <img
-                src={blog.CoverImg}
-                className="max-h-full max-w-full rounded-md m-auto block"
-              />
-            ) : (
-              <img
-                src="https://cdn1.iconfinder.com/data/icons/ui-icon-part-3/128/image-512.png"
-                className="max-h-full max-w-full rounded-md m-auto block mix-blend-overlay"
-              />
-            )}
+            <img
+              src={blog.img}
+              className="max-h-full max-w-full rounded-md m-auto block"
+            />
+
             <p className=" font-semibold capitalize text-2xl mt-4">
-              {blog.Title}
+              {blog.title}
             </p>
             <div className="flex items-center gap-2 my-2 justify-between">
               <div className="flex items-center gap-2 my-2">
                 <PersonIcon className="text-lightBlue" />
-                <p>{blog.authorName}</p>
+                <p>{blog.userName}</p>
               </div>
-              <div className="flex items-center gap-2 my-2">
+              {/* <div className="flex items-center gap-2 my-2">
                 {user ? (
                   <LikeBlogButton
                     id={blog.id}
@@ -111,18 +118,18 @@ const Bloglist = () => {
                     <span>0</span>
                   )}
                 </p>
-              </div>
+              </div> */}
             </div>
             <div>
               <div className="flex justify-between">
                 <Link
-                  to={`/show/${blog.id}`}
+                  to={`/show/${blog._id}`}
                   className="mr-2 font-normal text-lightBlue"
                 >
                   Read Now
                   <ArrowForwardIcon />
                 </Link>
-                {blog.author === user?.uid && (
+                {/* {blog.author === user?.uid && (
                   <>
                     <Link
                       to={`/edit-blog/${blog.id}`}
@@ -137,7 +144,7 @@ const Bloglist = () => {
                       <DeleteIcon />
                     </button>
                   </>
-                )}
+                )} */}
               </div>
             </div>
           </div>

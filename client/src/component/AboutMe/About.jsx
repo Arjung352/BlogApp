@@ -3,6 +3,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import LanguageIcon from "@mui/icons-material/Language";
 import XIcon from "@mui/icons-material/X";
 function About() {
   const ColoredLine = ({ color }) => (
@@ -52,23 +53,30 @@ function About() {
               target="_"
               title="Instagram"
             >
-              <InstagramIcon className="mr-2 cursor-pointer" />
+              <InstagramIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
             </a>
             <a href="https://github.com/Arjung352/" target="_" title="Github">
-              <GitHubIcon className="mr-2 cursor-pointer" />
+              <GitHubIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
             </a>
             <a
               href="https://www.linkedin.com/in/arjun-gupta-948b11291"
               target="_"
               title="LinkedIn"
             >
-              <LinkedInIcon className="cursor-pointer mr-2" />
+              <LinkedInIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
             </a>
             <a href="mailto:arjung7751@gmail.com" target="_" title="Mail">
-              <MailOutlineIcon className="cursor-pointer mr-2" />
+              <MailOutlineIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
             </a>
             <a href="https://x.com/_arjungupta29" target="_" title="Twitter">
-              <XIcon className="cursor-pointer" />
+              <XIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
+            </a>
+            <a
+              href="https://arjun-gupta-developer.vercel.app/"
+              target="_"
+              title="Portfolio"
+            >
+              <LanguageIcon className=" hover:scale-110 transition-all ease-in-out  cursor-pointer" />
             </a>
           </div>
         </div>

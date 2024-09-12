@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
+  const redirectToHome = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -19,18 +20,20 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:1000/api/login", formData)
+      .post("http://localhost:1000/register/login", formData)
       .then((response) => {
+        localStorage.setItem("username", formData.username);
         setFormData({ username: "", password: "" });
         toast.success("Login succesfully!");
+        redirectToHome("/home");
       })
       .catch((error) => {
         toast.error("Failed to send data.");
       });
   };
   const navigate = useNavigate();
-  const singin = () => {
-    navigate("/Signin");
+  const singup = () => {
+    navigate("/");
   };
   return (
     <div className="w-screen flex justify-center items-center h-svh">
@@ -62,7 +65,7 @@ function Login() {
             Sign-in
           </Button>
         </form>{" "}
-        <button className="text-sm text-blue-700 underline" onClick={singin}>
+        <button className="text-sm text-blue-700 underline" onClick={singup}>
           Don't have an account? Sign-in!
         </button>
       </div>

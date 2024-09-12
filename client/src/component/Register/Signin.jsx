@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Signin() {
+  const navigateToHome = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,10 +21,12 @@ function Signin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:1000/api/signup", formData)
+      .post("http://localhost:1000/register/signup", formData)
       .then((response) => {
+        localStorage.setItem("username", formData.username);
         setFormData({ name: "", email: "", password: "" });
         toast.success("data sent successfully!");
+        navigateToHome("/");
       })
       .catch((error) => {
         toast.error("Failed to send data.");
