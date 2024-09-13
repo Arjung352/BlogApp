@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.16.6",
+    "@mui/material": "^5.16.7",
     "@nextui-org/card": "^2.0.33",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.7",
