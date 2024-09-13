@@ -17,7 +17,7 @@ const Bloglist = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1000/blog/display-all"
+          "https://blogapi-sooty.vercel.app/blog/display-all"
         );
         setData(response.data.data);
         setFilteredData(response.data.data);
@@ -49,7 +49,7 @@ const Bloglist = () => {
       }
 
       const response = await axios.post(
-        `http://localhost:1000/blog/like-blog/${id}`,
+        `https://blogapi-sooty.vercel.app/blog/like-blog/${id}`,
         { username }
       );
 
@@ -75,9 +75,12 @@ const Bloglist = () => {
   const handleDelete = async (id) => {
     try {
       const username = localStorage.getItem("username"); // Replace with actual username logic
-      await axios.delete(`http://localhost:1000/blog/delete-blog/${id}`, {
-        data: { username },
-      });
+      await axios.delete(
+        `https://blogapi-sooty.vercel.app/blog/delete-blog/${id}`,
+        {
+          data: { username },
+        }
+      );
       toast.success("Blog deleted successfully");
       setData(data.filter((blog) => blog._id !== id));
     } catch (error) {

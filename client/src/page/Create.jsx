@@ -41,7 +41,7 @@ const Create = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1000/blog/create-blog",
+        "https://blogapi-sooty.vercel.app/blog/create-blog",
         formData,
         {
           headers: {

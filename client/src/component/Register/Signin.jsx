@@ -21,7 +21,7 @@ function Signin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:1000/register/signup", formData)
+      .post("https://blogapi-sooty.vercel.app/register/signup", formData)
       .then((response) => {
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("_id", response.data._id);

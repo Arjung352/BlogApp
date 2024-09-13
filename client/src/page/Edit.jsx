@@ -15,7 +15,7 @@ const EditBlog = () => {
     const fetchBlogData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1000/blog/show/${id}`
+          `https://blogapi-sooty.vercel.app/blog/show/${id}`
         );
         const data = response.data;
         console.log(data);
@@ -32,10 +32,13 @@ const EditBlog = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:1000/blog/update-blog/${id}`, {
-        title,
-        desc,
-      });
+      await axios.put(
+        `https://blogapi-sooty.vercel.app/blog/update-blog/${id}`,
+        {
+          title,
+          desc,
+        }
+      );
       console.log(title, desc);
       navigate("/home"); // Redirect to home after successful update
     } catch (error) {

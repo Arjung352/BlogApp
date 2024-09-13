@@ -8,7 +8,9 @@ const ShowBlog = () => {
   const { id } = useParams();
   useEffect(() => {
     const fetch = (async () => {
-      let data = await axios.get(`http://localhost:1000/blog/show/${id}`);
+      let data = await axios.get(
+        `https://blogapi-sooty.vercel.app/blog/show/${id}`
+      );
       console.log(data.data);
       setblogs(data.data);
     })();
