@@ -21,6 +21,7 @@ const Bloglist = lazy(() => import("./page/Bloglist"));
 const About = lazy(() => import("./component/AboutMe/About"));
 const Create = lazy(() => import("./page/Create"));
 const ShowBlog = lazy(() => import("./page/Show"));
+const EditBlog = lazy(() => import("./page/Edit"));
 function App() {
   //Setting redirect logic
   const redirect = useNavigate();
@@ -57,7 +58,7 @@ function App() {
           <Route path="/" element={<Navbar />}>
             <Route path="home" element={<Bloglist />} />
             <Route path="show/:id" element={<ShowBlog />} />
-            {/* <Route path="edit-blog/:id" element={<EditBlog />} />*/}
+            <Route path="edit-blog/:id" element={<EditBlog />} />
             <Route path="create" element={<Create />} />
             <Route path="aboutme" element={<About />} />
             <Route path="*" element={<Maintenance />} />

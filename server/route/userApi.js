@@ -21,7 +21,10 @@ router.post("/signup", async (req, res) => {
       email: email,
     });
     await newUser.save();
-    res.status(200).json({ message: "user created succesfully" });
+    const userId = await User.findOne({ username });
+    res
+      .status(200)
+      .json({ message: "user created succesfully", _id: userId._id });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -36,7 +39,9 @@ router.post("/login", async (req, res) => {
     }
     bcrypt.compare(password, checkUser.password, (err, data) => {
       if (data) {
-        res.status(200).json({ username: username });
+        res
+          .status(200)
+          .json({ username: checkUser.username, _id: checkUser._id });
       } else {
         res.status(400).json({ message: "Password is incorrect" });
       }

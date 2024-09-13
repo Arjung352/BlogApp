@@ -22,13 +22,14 @@ function Login() {
     axios
       .post("http://localhost:1000/register/login", formData)
       .then((response) => {
-        localStorage.setItem("username", formData.username);
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("_id", response.data._id);
         setFormData({ username: "", password: "" });
         toast.success("Login succesfully!");
         redirectToHome("/home");
       })
       .catch((error) => {
-        toast.error("Failed to send data.");
+        toast.error("Username or Password is Incorrect");
       });
   };
   const navigate = useNavigate();
@@ -38,9 +39,9 @@ function Login() {
   return (
     <div className="w-screen flex justify-center items-center h-svh">
       <div className="text-center gap-3 font-bold font-worksans text-2xl text-lightBlue flex flex-col  p-6 rounded-md border-2 border-black shadow-lg shadow-black">
-        <h2 className=" text-2xl ">Log-In to TasteBudsTreats</h2>
+        <h2 className=" text-2xl ">Log-In to DotBlogs</h2>
         <h3 className=" text-base">
-          Log in to get to work and manage your account.
+          Log-in to get to work & manage your account.
         </h3>
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <TextField

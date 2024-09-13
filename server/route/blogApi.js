@@ -60,8 +60,8 @@ router.get("/display-all", async (req, res) => {
 // Show specific info of a blog
 router.get("/show/:id", async (req, res) => {
   try {
-    const blogId = req.params.id; // assuming the id is coming from the route parameter
-    const blog = await Blog.findById(blogId); // blogId should be a string
+    const blogId = req.params.id;
+    const blog = await Blog.findById(blogId);
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
@@ -70,4 +70,60 @@ router.get("/show/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+// edit the specific blog
+router.put("/update-blog/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, desc } = req.body;
+    await blog.findByIdAndUpdate(id, { title: title, desc: desc });
+    res.status(200).json({ message: "task updated succesfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+// delete a specific task
+router.delete("/delete-blog/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username } = req.body;
+    await User.findOneAndUpdate(
+      { username: username }, // Find the user by username
+      { $pull: { blog: id } }, // Remove the blog ID from the blog array
+      { new: true } // Return the updated document
+    );
+    await blog.findByIdAndDelete(id);
+    res.status(200).json({ message: "Blog deleted succesfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+// like a request
+router.post("/like-blog/:id", async (req, res) => {
+  try {
+    const { id } = req.params; // Get the blog ID from the request parameters
+    const { username } = req.body; // Get the username from the request body
+
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Find the blog by ID and add the user's UID to the likes array
+    const likeBlog = await blog.findByIdAndUpdate(
+      id,
+      { $addToSet: { likes: user._id } }, // Add the UID to the likes array if it doesn't exist
+      { new: true } // Return the updated document
+    );
+
+    if (!likeBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    res.status(200).json({ message: "Liked successfully", blog: likeBlog });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;

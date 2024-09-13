@@ -23,7 +23,8 @@ function Signin() {
     axios
       .post("http://localhost:1000/register/signup", formData)
       .then((response) => {
-        localStorage.setItem("username", formData.username);
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("_id", response.data._id);
         setFormData({ name: "", email: "", password: "" });
         toast.success("data sent successfully!");
         navigateToHome("/");

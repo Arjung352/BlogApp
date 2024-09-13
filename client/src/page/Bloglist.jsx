@@ -10,38 +10,87 @@ import axios from "axios";
 
 const Bloglist = () => {
   const navigate = useNavigate();
-  const redirectToAbout = () => {
-    navigate("/aboutme");
-  };
   const [data, setData] = useState([]);
-  // return (
-  //   <div>
-  //     {likes?.includes(user.uid) ? (
-  //       <button onClick={handleLikes}>
-  //         <ThumbUpIcon className=" text-lightBlue" />
-  //       </button>
-  //     ) : (
-  //       <button onClick={handleLikes}>
-  //         <ThumbUpIcon />
-  //       </button>
-  //     )}
-  //   </div>
-  // );
-
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
-    const fetchData = (async () => {
+    const fetchData = async () => {
       try {
-        const data = await axios.get("http://localhost:1000/blog/display-all");
-        console.log(data.data.data);
-        setData(data.data.data);
+        const response = await axios.get(
+          "http://localhost:1000/blog/display-all"
+        );
+        setData(response.data.data);
+        setFilteredData(response.data.data);
       } catch (error) {
         console.log(error);
       }
-    })();
+    };
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredData(
+      data.filter((blog) =>
+        blog.title.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, data]);
+
+  const handleLike = async (id) => {
+    try {
+      const userId = localStorage.getItem("_id"); // Replace with actual user ID logic
+      const username = localStorage.getItem("username"); // Replace with actual user ID logic
+      const blog = data.find((blog) => blog._id === id);
+
+      // Check if the user has already liked the blog
+      if (blog.likes.includes(userId)) {
+        toast.error("You have already liked this blog");
+        return;
+      }
+
+      const response = await axios.post(
+        `http://localhost:1000/blog/like-blog/${id}`,
+        { username }
+      );
+
+      if (response.status === 200) {
+        toast.success("Blog liked successfully");
+        const updatedData = data.map((blog) => {
+          if (blog._id === id) {
+            return {
+              ...blog,
+              likes: [...blog.likes, userId],
+            };
+          }
+          return blog;
+        });
+        setData(updatedData);
+        setFilteredData(updatedData);
+      }
+    } catch (error) {
+      toast.error("Failed to like the blog");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const username = localStorage.getItem("username"); // Replace with actual username logic
+      await axios.delete(`http://localhost:1000/blog/delete-blog/${id}`, {
+        data: { username },
+      });
+      toast.success("Blog deleted successfully");
+      setData(data.filter((blog) => blog._id !== id));
+    } catch (error) {
+      toast.error("Failed to delete the blog");
+    }
+  };
+  const redirectToAbout = () => {
+    navigate("/aboutme");
+  };
+
   return (
     <div className="font-worksans">
-      <div className=" h-2/5 bg-black w-full text-white flex pt-8 flex-col justify-center items-center font-worksans">
+      <div className="h-2/5 bg-black w-full text-white flex pt-8 flex-col justify-center items-center font-worksans">
         <h2 className="text-7xl text-center max-sm:text-6xl ">
           Welcome to DotBlog
         </h2>
@@ -61,12 +110,12 @@ const Bloglist = () => {
         <form className="absolute left-0 max-sm:top-14">
           <input
             type="text"
-            // value={}
-            // onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search blogs..."
             className="ml-4 border border-black rounded-lg p-2 "
           />
-          <button type="submit" className="ml-2 text-lightBlue ">
+          <button type="submit" className="ml-2 text-lightBlue">
             Search
           </button>
         </form>
@@ -74,19 +123,17 @@ const Bloglist = () => {
           All Blogs
         </h2>
       </div>
-      {/* Bloglist */}
       <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 mb-4 mt-8">
-        {data.map((blog, index) => (
+        {filteredData.map((blog, index) => (
           <div
             key={index}
-            className="flex flex-col bg-gradient-to-b from-gray-300 to-white mb-8  justify-end rounded-2xl hover:scale-105 transition-all ease-in-out duration-300 p-4 mx-4"
+            className="flex flex-col bg-gradient-to-b from-gray-300 to-white mb-8 justify-end rounded-2xl hover:scale-105 transition-all ease-in-out duration-300 p-4 mx-4"
           >
             <img
               src={blog.img}
               className="max-h-full max-w-full rounded-md m-auto block"
             />
-
-            <p className=" font-semibold capitalize text-2xl mt-4">
+            <p className="font-semibold capitalize text-2xl mt-4">
               {blog.title}
             </p>
             <div className="flex items-center gap-2 my-2 justify-between">
@@ -94,31 +141,18 @@ const Bloglist = () => {
                 <PersonIcon className="text-lightBlue" />
                 <p>{blog.userName}</p>
               </div>
-              {/* <div className="flex items-center gap-2 my-2">
-                {user ? (
-                  <LikeBlogButton
-                    id={blog.id}
-                    likes={blog.likes}
-                    blogslist={blogslist}
-                    setBlogs={setBlogs}
+              <div className={`flex items-center gap-2 my-2`}>
+                <button onClick={() => handleLike(blog._id)}>
+                  <ThumbUpIcon
+                    className={`${
+                      blog.likes.includes(localStorage.getItem("_id"))
+                        ? " text-lightBlue"
+                        : ""
+                    }`}
                   />
-                ) : (
-                  <button
-                    onClick={() => {
-                      toast.warn("Sign-In to like this post");
-                    }}
-                  >
-                    <LikeBlogButton />
-                  </button>
-                )}
-                <p>
-                  {blog.likes ? (
-                    <span>{blog.likes.length}</span>
-                  ) : (
-                    <span>0</span>
-                  )}
-                </p>
-              </div> */}
+                </button>
+                <p>{blog.likes.length}</p>
+              </div>
             </div>
             <div>
               <div className="flex justify-between">
@@ -129,22 +163,22 @@ const Bloglist = () => {
                   Read Now
                   <ArrowForwardIcon />
                 </Link>
-                {/* {blog.author === user?.uid && (
+                {blog.userName === localStorage.getItem("username") && (
                   <>
                     <Link
-                      to={`/edit-blog/${blog.id}`}
-                      className="text-lightBlue -translate-x-4"
+                      to={`/edit-blog/${blog._id}`}
+                      className="text-lightBlue"
                     >
                       <EditIcon />
                     </Link>
                     <button
-                      onClick={() => deleteBlog(blog.id)}
+                      onClick={() => handleDelete(blog._id)}
                       className="text-red-500"
                     >
                       <DeleteIcon />
                     </button>
                   </>
-                )} */}
+                )}
               </div>
             </div>
           </div>
