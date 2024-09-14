@@ -118,9 +118,6 @@ const Bloglist = () => {
             placeholder="Search blogs..."
             className="ml-4 border border-black rounded-lg p-2 "
           />
-          <button type="submit" className="ml-2 text-lightBlue">
-            Search
-          </button>
         </form>
         <h2 className="text-center font-medium text-4xl max-sm:pb-10">
           All Blogs
