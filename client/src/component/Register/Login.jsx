@@ -63,7 +63,7 @@ function Login() {
             name="password"
           />
           <Button variant="contained" type="submit">
-            Sign-in
+            Log-in
           </Button>
         </form>{" "}
         <button className="text-sm text-blue-700 underline" onClick={singup}>
