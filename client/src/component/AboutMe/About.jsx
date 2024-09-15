@@ -48,13 +48,13 @@ function About() {
             Connect me!
           </h1>
           <div>
-            <a
+            {/* <a
               href="https://www.instagram.com/_arjungupta29/"
               target="_"
               title="Instagram"
             >
               <InstagramIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
-            </a>
+            </a> */}
             <a href="https://github.com/Arjung352/" target="_" title="Github">
               <GitHubIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
             </a>
