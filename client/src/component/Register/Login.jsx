@@ -29,6 +29,7 @@ function Login() {
         redirectToHome("/home");
       })
       .catch((error) => {
+        setFormData({ username: "", password: "" });
         toast.error("Username or Password is Incorrect");
       });
   };

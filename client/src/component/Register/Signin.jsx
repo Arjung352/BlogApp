@@ -27,11 +27,11 @@ function Signin() {
         localStorage.setItem("username", formData.username);
         localStorage.setItem("_id", response.data._id);
         setFormData({ name: "", email: "", password: "" });
-        toast.success("data sent successfully!");
+        toast.success("Sign-in successfully!");
         navigateToHome("/home");
       })
       .catch((error) => {
-        toast.error("Failed to send data.");
+        toast.error("Username or E-mail already existed");
       });
   };
 
