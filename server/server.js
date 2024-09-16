@@ -8,7 +8,9 @@ app.use(express.json());
 require("dotenv").config();
 app.use(
   cors({
-    origin: "*",
+    origin: (origin, callback) => {
+      callback(null, origin || "*");
+    },
     credentials: true,
   })
 );
