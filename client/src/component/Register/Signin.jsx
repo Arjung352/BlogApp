@@ -42,17 +42,22 @@ function Signin() {
   };
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center out">
-      <div className="gap-3 font-bold text-2xl font-worksans text-lightBlue flex flex-col p-6 rounded-md border-2 border-black shadow-lg shadow-black">
-        <h2 className="text-center text-2xl">Sign-In to DotBlogs</h2>
-        <h3 className="text-base">Sign-Up to save and manage your account.</h3>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+    <div className="flex items-center justify-center h-svh bg-gradient-to-r from-blue-100 to-gray-400">
+      <div className="bg-white p-6 rounded-md shadow-lg border-2 border-gray-300 w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center text-gray-700 mb-4">
+          Sign-In to DotBlogs
+        </h2>
+        <h3 className="text-sm text-gray-600 text-center mb-6">
+          Sign-Up to save and manage your account.
+        </h3>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             label="Username"
             type="text"
             value={formData.username}
             required
+            fullWidth
             name="username"
             onChange={handleInputChange}
           />
@@ -60,6 +65,7 @@ function Signin() {
             variant="outlined"
             label="Email"
             type="email"
+            fullWidth
             name="email"
             value={formData.email}
             required
@@ -70,17 +76,23 @@ function Signin() {
             label="Password"
             type="password"
             required
+            fullWidth
             onChange={handleInputChange}
             value={formData.password}
             name="password"
           />
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            fullWidth
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             Sign-in
           </Button>
         </form>
         <button
           type="button" // This button should be of type 'button' to prevent accidental form submission
-          className="text-sm text-blue-700 underline"
+          className="mt-4 text-sm text-blue-600 hover:underline block mx-auto"
           onClick={login}
         >
           Already have an account? Login!
