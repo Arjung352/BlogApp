@@ -87,13 +87,13 @@ router.delete("/delete-blog/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { username } = req.body;
-    const blog = await Blog.findById(id);
+    const perticularBlog = await Blog.findById(id);
     await User.findOneAndUpdate(
       { username: username }, // Find the user by username
       { $pull: { blog: id } }, // Remove the blog ID from the blog array
       { new: true } // Return the updated document
     );
-    const imagePublicId = blog.img.split("/").pop().split(".")[0]; // Extract public_id from the image URL
+    const imagePublicId = perticularBlog.img.split("/").pop().split(".")[0]; // Extract public_id from the image URL
     await cloudinary.uploader.destroy(imagePublicId);
     await Blog.findByIdAndDelete(id);
     res.status(200).json({ message: "Blog deleted succesfully" });
