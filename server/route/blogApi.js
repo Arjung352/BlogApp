@@ -16,7 +16,7 @@ router.post("/create-blog", upload.single("img"), async (req, res) => {
     // Find the user by username
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ msesage: "User not found" });
     }
 
     // Cloudinary image URL
@@ -95,7 +95,7 @@ router.delete("/delete-blog/:id", async (req, res) => {
     );
     const imagePublicId = blog.img.split("/").pop().split(".")[0]; // Extract public_id from the image URL
     await cloudinary.uploader.destroy(imagePublicId);
-    await blog.findByIdAndDelete(id);
+    await Blog.findByIdAndDelete(id);
     res.status(200).json({ message: "Blog deleted succesfully" });
   } catch (error) {
     res.status(400).json({ message: error.message });
