@@ -5,6 +5,7 @@ const { storage } = require("../cloudinaryConfig");
 const Blog = require("../model/blog");
 const User = require("../model/user");
 const blog = require("../model/blog");
+const cloudinary = require("cloudinary").v2; // Ensure you have configured Cloudinary
 
 const upload = multer({ storage });
 // Creating a new blog
@@ -86,11 +87,14 @@ router.delete("/delete-blog/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { username } = req.body;
+    const blog = await Blog.findById(id);
     await User.findOneAndUpdate(
       { username: username }, // Find the user by username
       { $pull: { blog: id } }, // Remove the blog ID from the blog array
       { new: true } // Return the updated document
     );
+    const imagePublicId = blog.img.split("/").pop().split(".")[0]; // Extract public_id from the image URL
+    await cloudinary.uploader.destroy(imagePublicId);
     await blog.findByIdAndDelete(id);
     res.status(200).json({ message: "Blog deleted succesfully" });
   } catch (error) {
@@ -109,11 +113,10 @@ router.post("/like-blog/:id", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Find the blog by ID and add the user's UID to the likes array
     const likeBlog = await blog.findByIdAndUpdate(
       id,
-      { $addToSet: { likes: user._id } }, // Add the UID to the likes array if it doesn't exist
-      { new: true } // Return the updated document
+      { $addToSet: { likes: user._id } },
+      { new: true }
     );
 
     if (!likeBlog) {
