@@ -33,11 +33,11 @@ const Create = () => {
     // Create form data to handle file upload
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("desc", body); // Assuming 'desc' is for the blog content/body
+    formData.append("desc", body);
     if (image) {
       formData.append("img", image);
     }
-    formData.append("username", localStorage.getItem("username")); // Replace with the actual username
+    formData.append("username", localStorage.getItem("username"));
 
     try {
       const response = await axios.post(
@@ -54,7 +54,7 @@ const Create = () => {
       toast.success("Blog created successfully!");
       redirect("/home"); // Redirect to homepage or another page after successful submission
     } catch (error) {
-      console.error("Error creating blog:", error.response.data);
+      console.error("Error creating blog:", error);
       toast.error("Failed to create blog. Please try again.");
     }
   };

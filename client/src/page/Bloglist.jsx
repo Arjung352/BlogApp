@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { TailSpin } from "react-loader-spinner";
 
 const Bloglist = () => {
   const navigate = useNavigate();
@@ -38,8 +39,8 @@ const Bloglist = () => {
 
   const handleLike = async (id) => {
     try {
-      const userId = localStorage.getItem("_id"); // Replace with actual user ID logic
-      const username = localStorage.getItem("username"); // Replace with actual user ID logic
+      const userId = localStorage.getItem("_id");
+      const username = localStorage.getItem("username");
       const blog = data.find((blog) => blog._id === id);
 
       // Check if the user has already liked the blog
@@ -74,7 +75,7 @@ const Bloglist = () => {
 
   const handleDelete = async (id) => {
     try {
-      const username = localStorage.getItem("username"); // Replace with actual username logic
+      const username = localStorage.getItem("username");
       await axios.delete(
         `https://blogapi-sooty.vercel.app/blog/delete-blog/${id}`,
         {
@@ -123,67 +124,87 @@ const Bloglist = () => {
           All Blogs
         </h2>
       </div>
-      <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 mb-4 mt-8">
-        {filteredData.map((blog, index) => (
-          <div
-            key={index}
-            className="flex flex-col bg-gradient-to-b from-gray-300 to-white mb-8 justify-end rounded-2xl hover:scale-105 transition-all ease-in-out duration-300 p-4 mx-4"
-          >
-            <img
-              src={blog.img}
-              className="max-h-full max-w-full rounded-md m-auto block"
-            />
-            <p className="font-semibold capitalize text-2xl mt-4">
-              {blog.title}
-            </p>
-            <div className="flex items-center gap-2 my-2 justify-between">
-              <div className="flex items-center gap-2 my-2">
-                <PersonIcon className="text-lightBlue" />
-                <p>{blog.userName}</p>
+      {filteredData && filteredData.length > 0 && (
+        <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 mb-4 mt-8">
+          {filteredData.map((blog, index) => (
+            <div
+              key={index}
+              className="flex flex-col bg-gradient-to-b from-gray-300 to-white mb-8 justify-end rounded-2xl hover:scale-105 transition-all ease-in-out duration-300 p-4 mx-4"
+            >
+              <img
+                src={blog.img}
+                className="max-h-full max-w-full rounded-md m-auto block"
+              />
+              <p className="font-semibold capitalize text-2xl mt-4">
+                {blog.title}
+              </p>
+              <div className="flex items-center gap-2 my-2 justify-between">
+                <div className="flex items-center gap-2 my-2">
+                  <PersonIcon className="text-lightBlue" />
+                  <p>{blog.userName}</p>
+                </div>
+                <div className={`flex items-center gap-2 my-2`}>
+                  <button onClick={() => handleLike(blog._id)}>
+                    <ThumbUpIcon
+                      className={`${
+                        blog.likes.includes(localStorage.getItem("_id"))
+                          ? " text-lightBlue"
+                          : ""
+                      }`}
+                    />
+                  </button>
+                  <p>{blog.likes.length}</p>
+                </div>
               </div>
-              <div className={`flex items-center gap-2 my-2`}>
-                <button onClick={() => handleLike(blog._id)}>
-                  <ThumbUpIcon
-                    className={`${
-                      blog.likes.includes(localStorage.getItem("_id"))
-                        ? " text-lightBlue"
-                        : ""
-                    }`}
-                  />
-                </button>
-                <p>{blog.likes.length}</p>
+              <div>
+                <div className="flex justify-between">
+                  <Link
+                    to={`/show/${blog._id}`}
+                    className="mr-2 font-normal text-lightBlue"
+                  >
+                    Read Now
+                    <ArrowForwardIcon />
+                  </Link>
+                  {blog.userName === localStorage.getItem("username") && (
+                    <>
+                      <Link
+                        to={`/edit-blog/${blog._id}`}
+                        className="text-lightBlue"
+                      >
+                        <EditIcon />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(blog._id)}
+                        className="text-red-500"
+                      >
+                        <DeleteIcon />
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-            <div>
-              <div className="flex justify-between">
-                <Link
-                  to={`/show/${blog._id}`}
-                  className="mr-2 font-normal text-lightBlue"
-                >
-                  Read Now
-                  <ArrowForwardIcon />
-                </Link>
-                {blog.userName === localStorage.getItem("username") && (
-                  <>
-                    <Link
-                      to={`/edit-blog/${blog._id}`}
-                      className="text-lightBlue"
-                    >
-                      <EditIcon />
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(blog._id)}
-                      className="text-red-500"
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+      {filteredData && filteredData.length === 0 && (
+        <div className="w-full mt-20 flex-col bg-white h-1/3 flex justify-center items-center">
+          <TailSpin
+            height="80"
+            width="80"
+            color="#3f66dd"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+          <p className="font-salsa text-3xl my-6 max-sm:text-xl">
+            loading Blogs...
+          </p>
+        </div>
+      )}
+
       <div>
         <ToastContainer />
       </div>
