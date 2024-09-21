@@ -5,7 +5,7 @@ const { storage } = require("../cloudinaryConfig");
 const Blog = require("../model/blog");
 const User = require("../model/user");
 const blog = require("../model/blog");
-const cloudinary = require("cloudinary").v2; // Ensure you have configured Cloudinary
+const { cloudinary } = require("../cloudinaryConfig"); // Ensure you have configured Cloudinary
 
 const upload = multer({ storage });
 // Creating a new blog
