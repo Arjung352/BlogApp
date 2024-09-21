@@ -87,22 +87,36 @@ router.delete("/delete-blog/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { username } = req.body;
-    const perticularBlog = await Blog.findById(id);
+
+    // Find the particular blog
+    const particularBlog = await Blog.findById(id);
+    if (!particularBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Update the user by pulling out the blog ID
     await User.findOneAndUpdate(
-      { username: username }, // Find the user by username
-      { $pull: { blog: id } }, // Remove the blog ID from the blog array
-      { new: true } // Return the updated document
+      { username: username },
+      { $pull: { blog: id } },
+      { new: true }
     );
-    const imagePublicId = perticularBlog.img.split("/").pop().split(".")[0]; // Extract public_id from the image URL
-    await cloudinary.uploader.destroy(imagePublicId, (result) => {
-      console.log(result);
-    });
+
+    // Extract public_id from the image URL
+    const imagePublicId = particularBlog.img.split("/").pop().split(".")[0];
+
+    // Wait for Cloudinary image deletion
+    const cloudinaryResult = await cloudinary.uploader.destroy(imagePublicId);
+    console.log(cloudinaryResult);
+
+    // Delete the blog from the database
     await Blog.findByIdAndDelete(id);
-    res.status(200).json({ message: "Blog deleted succesfully" });
+
+    res.status(200).json({ message: "Blog deleted successfully" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 // like a request
 router.post("/like-blog/:id", async (req, res) => {
   try {
