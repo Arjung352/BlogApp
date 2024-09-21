@@ -85,7 +85,7 @@ function App() {
             visible={true}
           />
           <p className="font-salsa">
-            Starting the Server Please have paitance!
+            Starting the Server Please have patience!
           </p>
         </div>
       )}
