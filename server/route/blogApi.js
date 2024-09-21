@@ -94,7 +94,9 @@ router.delete("/delete-blog/:id", async (req, res) => {
       { new: true } // Return the updated document
     );
     const imagePublicId = perticularBlog.img.split("/").pop().split(".")[0]; // Extract public_id from the image URL
-    await cloudinary.uploader.destroy(imagePublicId);
+    await cloudinary.uploader.destroy(imagePublicId, (result) => {
+      console.log(result);
+    });
     await Blog.findByIdAndDelete(id);
     res.status(200).json({ message: "Blog deleted succesfully" });
   } catch (error) {
