@@ -4,9 +4,11 @@ import { ToastContainer, toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
+import { TailSpin } from "react-loader-spinner";
 
 const Create = () => {
   const redirect = useNavigate();
+  const [load, setload] = useState(true);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState(null);
@@ -29,7 +31,6 @@ const Create = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-
     // Create form data to handle file upload
     const formData = new FormData();
     formData.append("title", title);
@@ -38,7 +39,7 @@ const Create = () => {
       formData.append("img", image);
     }
     formData.append("username", localStorage.getItem("username"));
-
+    setload(false);
     try {
       const response = await axios.post(
         "https://blogapi-sooty.vercel.app/blog/create-blog",
@@ -49,7 +50,6 @@ const Create = () => {
           },
         }
       );
-
       // Handle successful response
       toast.success("Blog created successfully!");
       redirect("/home"); // Redirect to homepage or another page after successful submission
@@ -59,13 +59,13 @@ const Create = () => {
     }
   };
 
-  return (
-    <div>
+  return load ? (
+    <div className="backGround-Gradient-Light pb-4">
       <p className="font-worksans text-4xl text-center font-medium pt-8">
         Create a Blog
       </p>
-      <div className="flex justify-center mt-8">
-        <div className="w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
+      <div className="flex h-full justify-center mb-8 mt-8">
+        <div className="w-2/4  flex justify-center max-sm:w-11/12 max-sm:mb-4">
           <form
             onSubmit={submit}
             className="bg-white p-8 rounded-lg shadow-md border border-black font-worksans shadow-black w-full h-full"
@@ -137,6 +137,19 @@ const Create = () => {
       <div>
         <ToastContainer />
       </div>
+    </div>
+  ) : (
+    <div className="w-full bg-white h-screen flex justify-center items-center">
+      <TailSpin
+        height="80"
+        width="80"
+        color="#3f66dd"
+        ariaLabel="tail-spin-loading"
+        radius="1"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
     </div>
   );
 };

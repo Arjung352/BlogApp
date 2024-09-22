@@ -10,6 +10,7 @@ export default {
       colors: {
         OxfordBlue: "#08284e",
         lightBlue: "#3f66dd",
+        lightBlack: "#1b1b1b",
         offWhite: "#f0f0f0",
       },
     },

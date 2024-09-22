@@ -38,42 +38,7 @@ function Login() {
     navigate("/");
   };
   return (
-    // <div className="w-screen flex justify-center items-center ">
-    //   <div className="text-center gap-3 font-bold font-worksans text-2xl text-lightBlue flex flex-col  p-6 rounded-md border-2 border-black shadow-lg shadow-black">
-    //     <h2 className=" text-2xl ">Log-In to DotBlogs</h2>
-    //     <h3 className=" text-base">
-    //       Log-in to get to work & manage your account.
-    //     </h3>
-    //     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-    //       <TextField
-    //         variant="outlined"
-    //         label="Username"
-    //         type="text"
-    //         value={formData.username}
-    //         required
-    //         name="username"
-    //         onChange={handleInputChange}
-    //       />
-    //       <TextField
-    //         variant="outlined"
-    //         label="Password"
-    //         type="password"
-    //         required
-    //         onChange={handleInputChange}
-    //         value={formData.password}
-    //         name="password"
-    //       />
-    //       <Button variant="contained" type="submit">
-    //         Log-in
-    //       </Button>
-    //     </form>{" "}
-    //     <button className="text-sm text-blue-700 underline" onClick={singup}>
-    //       Don't have an account? Sign-in!
-    //     </button>
-    //   </div>
-    //   <ToastContainer />
-    // </div>
-    <div className="flex items-center justify-center h-svh bg-gradient-to-r from-blue-100 to-gray-400">
+    <div className="flex items-center justify-center h-svh backGround-Gradient-Light">
       <div className="bg-white p-6 rounded-md shadow-lg border-2 border-gray-300 w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-4">
           Log-In to DotBlogs

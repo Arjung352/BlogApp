@@ -1,4 +1,3 @@
-import { TailSpin } from "react-loader-spinner";
 import { NavLink, Outlet } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -6,6 +5,9 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import CreateIcon from "@mui/icons-material/Create";
+import InfoIcon from "@mui/icons-material/Info";
 function Navbar() {
   const redirect = useNavigate();
   const handleSignOut = () => {
@@ -34,18 +36,19 @@ function Navbar() {
     <>
       {/* Overlay Navbar */}
       <div
-        className={`w-screen h-svh bg-black inset-0 flex overflow-y-hidden fixed top-0 left-0 flex-col justify-between transform transition-transform ${
+        className={`w-screen h-svh backGround-Gradient inset-0 flex overflow-y-hidden fixed top-0 left-0 flex-col justify-between transform transition-transform ${
           visible ? "translate-x-0" : "translate-x-full"
         }`}
         style={{ position: "fixed", zIndex: 10 }}
       >
         <div className="ml-4 mt-4 text-4xl italic flex justify-between items-center ">
-          <div>
-            <span className="font-medium text-5xl text-lightBlue font-worksans">
+          <div className=" drop-shadow-2xl">
+            <span className="font-medium text-5xl text-lightBlue font-worksans ">
               Dot
             </span>
             <span className="font-light text-white font-worksans">Blog</span>
           </div>
+
           <button className="text-white mr-4" onClick={handleNavbar}>
             <CloseIcon />
           </button>
@@ -53,17 +56,33 @@ function Navbar() {
         <div>
           <ul className="text-white text-2xl ml-4 flex flex-col gap-3 font-worksans">
             <li className="mb-5">
-              <NavLink to={"/home"} onClick={handleNavbar}>
+              <NavLink
+                to={"/home"}
+                onClick={handleNavbar}
+                className="flex gap-2 items-center"
+              >
+                <FormatListBulletedIcon />
                 All Blogs
               </NavLink>
             </li>
+
             <li className="mb-5">
-              <NavLink to={"create"} onClick={handleNavbar}>
+              <NavLink
+                to={"create"}
+                className="flex gap-2 items-center"
+                onClick={handleNavbar}
+              >
+                <CreateIcon />
                 CreateBlog
               </NavLink>
             </li>
             <li className="mb-5">
-              <NavLink to={"aboutme"} onClick={handleNavbar}>
+              <NavLink
+                to={"aboutme"}
+                className="flex gap-2 items-center"
+                onClick={handleNavbar}
+              >
+                <InfoIcon />
                 About
               </NavLink>
             </li>
@@ -72,7 +91,7 @@ function Navbar() {
         <div>
           <button
             onClick={handleSignOut}
-            className="mb-4 ml-4 px-4 py-2 font-worksans rounded-md bg-lightBlue text-white"
+            className="mb-4 ml-4 px-4 py-2 font-worksans shadow-sm shadow-white rounded-md text-white bg-gradient-to-r from-slate-500 to-lightBlue"
           >
             Sign-Out
           </button>
@@ -80,7 +99,7 @@ function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <div className="w-full bg-black pb-2 flex justify-between items-center font-worksans">
+      <div className="w-full bg-gradient-to-r from-black to-lightBlack pb-2 flex justify-between items-center font-worksans">
         <div className="text-5xl italic max-lg:text-3xl">
           <span className="font-medium text-6xl max-lg:text-4xl text-lightBlue">
             Dot
@@ -91,13 +110,31 @@ function Navbar() {
           className={`md:flex md:justify-between md:items-center md:w-1/2 md:pl-4 md:pt-2 md:pr-9 text-white md:text-xl hidden md:block`}
         >
           <li>
-            <NavLink to={"/home"}>All Blogs</NavLink>
+            <NavLink
+              className=" hover:text-lightBlue hover:underline hover:transition-shadow duration-300 flex gap-3 items-center"
+              to={"/home"}
+            >
+              <FormatListBulletedIcon />
+              All Blogs
+            </NavLink>
           </li>
           <li>
-            <NavLink to={"create"}>CreateBlog</NavLink>
+            <NavLink
+              className=" hover:text-lightBlue hover:underline hover:transition-shadow duration-300 flex gap-3 items-center"
+              to={"create"}
+            >
+              <CreateIcon />
+              CreateBlog
+            </NavLink>
           </li>
           <li>
-            <NavLink to={"aboutme"}>About</NavLink>
+            <NavLink
+              className=" hover:text-lightBlue hover:underline hover:transition-shadow duration-300 flex gap-3 items-center"
+              to={"aboutme"}
+            >
+              <InfoIcon />
+              About
+            </NavLink>
           </li>
         </ul>
         <div
@@ -105,7 +142,7 @@ function Navbar() {
         >
           <button
             onClick={handleSignOut}
-            className="px-4 py-2 rounded-md bg-lightBlue text-white"
+            className="px-4 py-2 rounded-md bg-lightBlue text-white shadow-sm shadow-white bg-gradient-to-r from-slate-500 to-lightBlue"
           >
             Sign-Out
           </button>

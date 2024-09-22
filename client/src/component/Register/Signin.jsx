@@ -42,7 +42,7 @@ function Signin() {
   };
 
   return (
-    <div className="flex items-center justify-center h-svh bg-gradient-to-r from-blue-100 to-gray-400">
+    <div className="flex items-center justify-center h-svh backGround-Gradient-Light">
       <div className="bg-white p-6 rounded-md shadow-lg border-2 border-gray-300 w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-4">
           Sign-In to DotBlogs

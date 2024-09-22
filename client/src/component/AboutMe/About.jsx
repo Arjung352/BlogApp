@@ -17,7 +17,7 @@ function About() {
     />
   );
   return (
-    <div className="flex justify-center mt-8 ">
+    <div className="flex justify-center pt-8 backGround-Gradient-Light ">
       <div className="w-4/5 flex flex-row-reverse font-worksans max-lg:flex-col">
         <Myself />
         <div className=" font-semibold font-2xl mr-16 mt-8 font-Nato max-lg:mb-4 max-sm:mr-0">
