@@ -17,21 +17,23 @@ function About() {
     />
   );
   return (
-    <div className="flex justify-center pt-8 backGround-Gradient-Light ">
+    <div className="flex justify-center pt-8 backGround-Gradient-Light pb-20 ">
       <div className="w-4/5 flex flex-row-reverse font-worksans max-lg:flex-col">
         <Myself />
         <div className=" font-semibold font-2xl mr-16 mt-8 font-Nato max-lg:mb-4 max-sm:mr-0">
-          <h1 className="font-bold text-4xl mb-4 text-olive">About Me</h1>
+          <h1 className="font-bold text-4xl mb-4 text-olive">About Us</h1>
           <h2 className="text-3xl mb-4">Namaste</h2>
           <p>
-            Hello and welcome to my blog! I'm Arjun Gupta, a MERN Stack
-            Developer with a passion for web development, technology, and all
-            things code. This space is where I share my journey as a developer,
-            insights on the latest trends, and tips and tricks I've picked up
-            along the way.
+            Hello and welcome to my blog! We are Jatin, Dev, Lakshey , a MERN
+            Stack Developer with a passion for web development, technology, and
+            all things code. This space is where I share my journey as a
+            developer, insights on the latest trends, and tips and tricks We've
+            picked up along the way.
           </p>
           <ColoredLine color={"black"} />
-          <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">Who am I</h1>
+          <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">
+            Who Are We
+          </h1>
           <h2 className="text-3xl mb-4">Hello!</h2>
           <p>
             MERN Stack Developer with a passion for building dynamic and
@@ -44,7 +46,7 @@ function About() {
             Let's connect and create innovative solutions together!
           </p>
           <ColoredLine color={"black"} />
-          <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">
+          {/* <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">
             Connect me!
           </h1>
           <div>
@@ -55,7 +57,7 @@ function About() {
             >
               <InstagramIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
             </a> */}
-            <a href="https://github.com/Arjung352/" target="_" title="Github">
+          {/* <a href="https://github.com/Arjung352/" target="_" title="Github">
               <GitHubIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
             </a>
             <a
@@ -78,7 +80,7 @@ function About() {
             >
               <LanguageIcon className=" hover:scale-110 transition-all ease-in-out  cursor-pointer" />
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

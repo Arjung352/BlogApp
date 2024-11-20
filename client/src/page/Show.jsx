@@ -26,7 +26,7 @@ const ShowBlog = () => {
           <img
             src={blog.img}
             alt={blog.title}
-            className="max-h-full max-w-full rounded-md m-auto block"
+            className="max-h-full max-w-full rounded-md m-auto block mt-4"
           />
         </div>
         <div className="p-6">

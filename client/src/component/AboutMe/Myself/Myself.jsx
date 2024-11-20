@@ -11,24 +11,24 @@ function Myself() {
             alt="Arjun"
             className="MyPic border-2 border-black"
           />
-          <p className="Name text-center ">Arjun Gupta</p>
+          <p className="Name text-center ">DotBlog</p>
         </div>
         <div className="AboutMe">
           <p className=" font-semibold font-sans pb-2 text-lg">
-            Hi, I'm Arjun Gupta, a passionate and dedicated MERN Stack Developer
-            with a strong foundation in building dynamic and responsive web
-            applications. With a background in software engineering, I've honed
-            my skills in MongoDB, Express.js, React.js, and Node.js to deliver
-            seamless, full-stack solutions that meet modern web development
-            standards.
+            Hi, We are Jatin, Dev, Lakshey, a passionate and dedicated MERN
+            Stack Developer with a strong foundation in building dynamic and
+            responsive web applications. With a background in software
+            engineering, We've honed our skills in MongoDB, Express.js,
+            React.js, and Node.js to deliver seamless, full-stack solutions that
+            meet modern web development standards.
             <br />
-            <a
+            {/* <a
               href="https://arjun-gupta-developer.vercel.app/"
               target="_blank"
               className="text-lightBlue gap-1 mt-1 flex items-center"
             >
               Portfilio -<LanguageIcon />
-            </a>
+            </a> */}
           </p>
         </div>
       </div>

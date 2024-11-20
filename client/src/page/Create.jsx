@@ -60,7 +60,7 @@ const Create = () => {
   };
 
   return load ? (
-    <div className="backGround-Gradient-Light pb-4">
+    <div className="backGround-Gradient-Light pb-4 h-5/6">
       <p className="font-worksans text-4xl text-center font-medium pt-8">
         Create a Blog
       </p>
