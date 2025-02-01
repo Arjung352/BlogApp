@@ -5,9 +5,9 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import PersonIcon from "@mui/icons-material/Person";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
-// import { TailSpin } from "react-loader-spinner";
+import Footer from "./Footer/Footer";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -207,10 +207,11 @@ const Bloglist = () => {
             </div>
           </div>
         )}
+        <Footer />
       </div>
 
       <div>
-        <ToastContainer />
+        <Toaster />
       </div>
     </div>
   );

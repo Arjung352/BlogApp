@@ -3,8 +3,7 @@ import Button from "@material-ui/core/Button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Toaster } from "react-hot-toast";
 
 function Login() {
   const redirectToHome = useNavigate();
@@ -83,7 +82,7 @@ function Login() {
           Don't have an account? Sign-in!
         </button>
       </div>
-      <ToastContainer />
+      <Toaster />
     </div>
   );
 }

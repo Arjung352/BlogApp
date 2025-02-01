@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, Toaster } from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
+import Footer from "./Footer/Footer";
 
 const Create = () => {
   const redirect = useNavigate();
@@ -60,7 +61,7 @@ const Create = () => {
   };
 
   return load ? (
-    <div className="backGround-Gradient-Light pb-4">
+    <div className="backGround-Gradient-Light ">
       <p className="font-worksans text-4xl text-center font-medium pt-8">
         Create a Blog
       </p>
@@ -135,8 +136,9 @@ const Create = () => {
         </div>
       </div>
       <div>
-        <ToastContainer />
+        <Toaster />
       </div>
+      <Footer />
     </div>
   ) : (
     <div className="w-full bg-white h-screen flex justify-center items-center">
