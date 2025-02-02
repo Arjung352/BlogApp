@@ -90,7 +90,7 @@ function Navbar() {
         <div>
           <button
             onClick={handleSignOut}
-            className="mb-4 ml-4 px-4 py-2 font-worksans shadow-sm shadow-white rounded-md text-white bg-gradient-to-r from-slate-500 to-lightBlue"
+            className="mb-4 ml-4 px-4 py-2 font-worksans rounded-md text-white bg-gradient-to-r from-lightBlack to-blue-800"
           >
             Sign-Out
           </button>
@@ -99,7 +99,7 @@ function Navbar() {
 
       {/* Main Navbar */}
       <div className="w-full bg-gradient-to-r from-lightBlack via-slate-800 to-lightBlack pb-3 flex justify-between items-center font-worksans">
-        <div className="text-5xl italic max-lg:text-3xl">
+        <div className="text-5xl italic max-md:ml-2 max-md:mt-2 max-lg:text-3xl">
           <span className="font-medium text-6xl max-lg:text-4xl text-lightBlue">
             Dot
           </span>
@@ -141,7 +141,7 @@ function Navbar() {
         >
           <button
             onClick={handleSignOut}
-            className="px-4 py-2 rounded-md bg-lightBlue text-white shadow-sm shadow-white bg-gradient-to-r from-slate-500 to-lightBlue"
+            className="px-4 py-2 rounded-md bg-lightBlue text-white  bg-gradient-to-r  from-lightBlack to-blue-800"
           >
             Sign-Out
           </button>

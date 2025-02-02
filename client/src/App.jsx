@@ -84,9 +84,6 @@ function App() {
             wrapperClass=""
             visible={true}
           />
-          <p className="font-salsa">
-            Starting the Server Please have patience!
-          </p>
         </div>
       )}
     </>

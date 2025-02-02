@@ -38,7 +38,7 @@ function Login() {
   };
   return (
     <div className="flex items-center justify-center h-svh backGround-Gradient-Light">
-      <div className="bg-white p-6 rounded-md shadow-lg border-2 border-gray-300 w-full max-w-md">
+      <div className="backdrop-filter bg-gray-300 backdrop-blur-md bg-opacity-10 p-8 rounded-xl shadow-md border border-black  font-worksans shadow-black w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-4">
           Log-In to DotBlogs
         </h2>
@@ -66,14 +66,12 @@ function Login() {
             name="password"
             fullWidth
           />
-          <Button
-            variant="contained"
+          <button
             type="submit"
-            fullWidth
-            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full font-worksans  py-[0.6rem] bg-gradient-to-r from-lightBlack via-blue-800 to-lightBlack text-white rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Log-in
-          </Button>
+          </button>
         </form>
         <button
           className="mt-4 text-sm text-blue-600 hover:underline block mx-auto"
