@@ -98,7 +98,7 @@ function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <div className="w-full bg-gradient-to-r from-black to-lightBlack pb-2 flex justify-between items-center font-worksans">
+      <div className="w-full bg-gradient-to-r from-lightBlack via-slate-800 to-lightBlack pb-3 flex justify-between items-center font-worksans">
         <div className="text-5xl italic max-lg:text-3xl">
           <span className="font-medium text-6xl max-lg:text-4xl text-lightBlue">
             Dot

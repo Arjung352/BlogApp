@@ -18,76 +18,111 @@ function About() {
     />
   );
   return (
-    <div className="backGround-Gradient-Light">
-      <div className="flex justify-center p-8  ">
-        <div className="w-4/5 flex flex-row-reverse font-worksans max-lg:flex-col">
-          <Myself />
-          <div className=" font-semibold font-2xl mr-16 mt-8 font-Nato max-lg:mb-4 max-sm:mr-0">
-            <h1 className="font-bold text-4xl mb-4 text-olive">About Me</h1>
-            <h2 className="text-3xl mb-4">Namaste</h2>
-            <p>
-              Hello and welcome to my blog! I'm Arjun Gupta, a MERN Stack
-              Developer with a passion for web development, technology, and all
-              things code. This space is where I share my journey as a
-              developer, insights on the latest trends, and tips and tricks I've
-              picked up along the way.
-            </p>
-            <ColoredLine color={"black"} />
-            <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">
-              Who am I
-            </h1>
-            <h2 className="text-3xl mb-4">Hello!</h2>
-            <p>
-              MERN Stack Developer with a passion for building dynamic and
-              responsive web applications. Skilled in FRONT-END technologies
-              such as HTML, CSS, JavaScript, and ReactJS, as well as BACK-END
-              technologies including Node.js, Firebase, PHP, Express.js, My-SQL
-              and MongoDB. Comfortable working with frameworks and libraries
-              like Bootstrap, Material-UI, and Tailwind CSS. Dedicated to
-              continuous learning and staying up-to-date with the latest
-              industry trends. Let's connect and create innovative solutions
-              together!
-            </p>
-            <ColoredLine color={"black"} />
-            <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">
-              Connect me!
-            </h1>
-            <div>
-              {/* <a
+    <div className="relative backGround-Gradient-Light">
+      <div className="flex flex-col items-center">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row max-md:pt-0 py-8">
+            <div className="lg:hidden w-full mb-8">
+              <Myself />
+            </div>
+
+            <div className="flex-1 flex flex-col  justify-center space-y-8 max-md:flex-col max-md:items-center max-md:justify-center">
+              <div className="backdrop-filter max-md:w-11/12 bg-gray-400 backdrop-blur-md bg-opacity-10 border border-gray-100 rounded-xl shadow-lg p-6 transition duration-500">
+                <h1 className="font-bold text-4xl mb-4 bg-gradient-to-r from-blue-600 to-lightBlack bg-clip-text text-transparent">
+                  About{" "}
+                  <span className="font-worksans italic">
+                    <span className="text-blue-700 font-medium">Dot</span>
+                    <span className="font-light text-3xl text-black">Blog</span>
+                  </span>
+                </h1>
+                <p className="text-base sm:text-lg leading-relaxed text-left">
+                  DotBlog is a dynamic and user-friendly blogging platform built
+                  using the MERN (MongoDB, Express, React, Node.js) stack.
+                  Designed for writers, readers, and content creators, DotBlog
+                  offers a seamless experience for publishing and exploring
+                  engaging blogs across various categories.
+                  <br />
+                  DotBlog empowers users to share their thoughts, ideas, and
+                  stories with a global audience. Whether you're a blogger or an
+                  enthusiastic reader, DotBlog provides the perfect space to
+                  explore and contribute meaningful content. 🚀
+                </p>
+              </div>
+
+              {/* About ME */}
+              <div className="backdrop-filter max-md:w-11/12 bg-gray-400 backdrop-blur-md bg-opacity-10 border border-gray-100 rounded-xl shadow-lg p-6 transition duration-500">
+                <h1 className="font-bold text-4xl mb-4 mt-4 bg-gradient-to-r from-blue-600 to-lightBlack bg-clip-text text-transparent">
+                  Who am I
+                </h1>
+                <p className="text-base sm:text-lg leading-relaxed text-left">
+                  Full Stack Web Developer with a passion for building dynamic
+                  and responsive web applications. Skilled in FRONT-END
+                  technologies such as HTML, CSS, JavaScript, and ReactJS, as
+                  well as BACK-END technologies including Node.js, Firebase,
+                  PHP, Express.js, My-SQL and MongoDB. Comfortable working with
+                  frameworks and libraries like Bootstrap, Material-UI, and
+                  Tailwind CSS. Dedicated to continuous learning and staying
+                  up-to-date with the latest industry trends. Let's connect and
+                  create innovative solutions together!
+                </p>
+              </div>
+
+              {/* Connect with Us */}
+              <div className="backdrop-filter bg-gray-400 backdrop-blur-md bg-opacity-10 border border-gray-100 rounded-xl shadow-lg p-6 transition duration-500">
+                <h1 className="font-bold text-4xl mb-4 bg-gradient-to-r from-blue-600 to-lightBlack bg-clip-text text-transparent">
+                  Connect me!
+                </h1>
+                <div className="flex justify-start space-x-6 text-2xl sm:text-3xl">
+                  {/* <a
               href="https://www.instagram.com/_arjungupta29/"
               target="_"
               title="Instagram"
             >
               <InstagramIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
             </a> */}
-              <a href="https://github.com/Arjung352/" target="_" title="Github">
-                <GitHubIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/arjun-gupta-948b11291"
-                target="_"
-                title="LinkedIn"
-              >
-                <LinkedInIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
-              </a>
-              <a href="mailto:arjung7751@gmail.com" target="_" title="Mail">
-                <MailOutlineIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
-              </a>
-              <a href="https://x.com/_arjungupta29" target="_" title="Twitter">
-                <XIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
-              </a>
-              <a
-                href="https://arjun-gupta-developer.vercel.app/"
-                target="_"
-                title="Portfolio"
-              >
-                <LanguageIcon className=" hover:scale-110 transition-all ease-in-out  cursor-pointer" />
-              </a>
+                  <a
+                    href="https://github.com/Arjung352/"
+                    target="_"
+                    title="Github"
+                  >
+                    <GitHubIcon className=" hover:scale-110 transition-all ease-in-out mr-2 cursor-pointer" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/arjun-gupta-948b11291"
+                    target="_"
+                    title="LinkedIn"
+                  >
+                    <LinkedInIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
+                  </a>
+                  <a href="mailto:arjung7751@gmail.com" target="_" title="Mail">
+                    <MailOutlineIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
+                  </a>
+                  <a
+                    href="https://x.com/_arjungupta29"
+                    target="_"
+                    title="Twitter"
+                  >
+                    <XIcon className=" hover:scale-110 transition-all ease-in-out cursor-pointer mr-2" />
+                  </a>
+                  <a
+                    href="https://arjun-gupta-developer.vercel.app/"
+                    target="_"
+                    title="Portfolio"
+                  >
+                    <LanguageIcon className=" hover:scale-110 transition-all ease-in-out  cursor-pointer" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden lg:block lg:w-1/3">
+              <Myself />
             </div>
           </div>
+
+          <Footer />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

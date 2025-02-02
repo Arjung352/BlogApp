@@ -28,7 +28,7 @@ function Footer() {
               <Link className="mt-3" to="/aboutme">
                 About
               </Link>
-              <Link to="/">All Blogs</Link>
+              <Link to="/home">All Blogs</Link>
               <Link to="/create">Create a Blog</Link>
             </div>
           </div>

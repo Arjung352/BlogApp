@@ -23,12 +23,12 @@ const ShowBlog = () => {
   return success ? (
     <div className=" backGround-Gradient-Light">
       <div className="flex flex-col items-center">
-        <div className="bg-white shadow-md w-1/2 shadow-black rounded-lg overflow-hidden my-9 max-w-3xl max-sm:w-11/12">
+        <div className="backdrop-filter bg-gray-200 backdrop-blur-md bg-opacity-10 shadow-md w-1/2 shadow-black rounded-xl overflow-hidden my-9 max-w-3xl max-sm:w-11/12">
           <div className="relative">
             <img
               src={blog.img}
               alt={blog.title}
-              className="max-h-full max-w-full rounded-md m-auto block"
+              className="max-h-full mt-4 max-w-full rounded-md m-auto block"
             />
           </div>
           <div className="p-6">

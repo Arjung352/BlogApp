@@ -96,7 +96,7 @@ const Bloglist = () => {
 
   return (
     <div className="font-worksans">
-      <div className="h-2/5 backGround-Gradient w-full text-white flex pt-8 flex-col justify-center items-center font-worksans">
+      <div className="h-2/5 bg-gradient-to-r from-lightBlack via-slate-800 to-lightBlack w-full text-white flex pt-8 flex-col justify-center items-center font-worksans">
         <h2 className="text-7xl text-center max-sm:text-6xl ">
           Welcome to DotBlog
         </h2>

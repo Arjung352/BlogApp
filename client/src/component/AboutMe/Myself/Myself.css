@@ -1,49 +1,85 @@
-.outter {
-  margin-top: 20px;
+.outer {
   display: flex;
   justify-content: center;
-}
-.Myself {
-  border-radius: 6px;
-  box-shadow: 2px 2px 3px black;
-  background-color: white;
-}
-.Pic {
-  background-repeat: no-repeat;
-  background-color: rgb(71, 71, 71);
-  background-position: center;
-  background-size: cover;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  padding: 1rem;
 }
-.MyPic {
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  transform: translatey(-20px);
+/* Slide-in and slide-out keyframes */
+@keyframes slideInContent {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
-.AboutMe {
-  margin: 10px;
+
+@keyframes slideOutContent {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Apply animations */
+.slide-in {
+  animation: slideInContent 1s ease forwards;
+}
+
+.slide-out {
+  animation: slideOutContent 1s ease forwards;
+}
+
+.myself-container {
+  overflow: hidden; /* Prevents content from overflowing outside the card */
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  max-width: 28rem;
+  padding: 2rem;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+}
+
+.my-pic {
+  border-radius: 9999px;
+  height: 8rem;
+  width: 8rem;
+  object-fit: cover;
+  margin: 0 auto;
+  border: 4px solid #e5e7eb;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.about-me {
+  color: #4b5563;
   font-size: 1rem;
+  line-height: 1.5;
 }
-.Name {
-  font-size: 40px;
-  color: white;
-  transform: translatey(-25px);
-}
-.Myself {
-  flex-direction: column;
-}
-.MyPic {
-  height: 100px;
-  width: 100px;
-}
-.Pic {
-  width: auto;
-}
-.AboutMe {
-  width: auto;
+
+@media (min-width: 768px) {
+  .myself-container {
+    max-width: 32rem;
+    padding: 2.5rem;
+  }
+
+  .name {
+    font-size: 1.75rem;
+  }
+
+  .about-me {
+    font-size: 1.125rem;
+  }
 }
