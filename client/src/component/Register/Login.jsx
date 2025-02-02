@@ -1,9 +1,9 @@
 import { TextField } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
+import { TailSpin } from "react-loader-spinner";
 
 function Login() {
   const redirectToHome = useNavigate();
@@ -11,13 +11,14 @@ function Login() {
     username: "",
     password: "",
   });
-
+  const [load, setLoad] = useState(false);
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoad(true);
     axios
       .post("https://blogapi-sooty.vercel.app/register/login", formData)
       .then((response) => {
@@ -26,10 +27,12 @@ function Login() {
         setFormData({ username: "", password: "" });
         toast.success("Login succesfully!");
         redirectToHome("/home");
+        setLoad(false);
       })
       .catch((error) => {
         setFormData({ username: "", password: "" });
         toast.error("Username or Password is Incorrect");
+        setLoad(false);
       });
   };
   const navigate = useNavigate();
@@ -70,7 +73,19 @@ function Login() {
             type="submit"
             className="w-full font-worksans  py-[0.6rem] bg-gradient-to-r from-lightBlack via-blue-800 to-lightBlack text-white rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Log-in
+            {load ? (
+              <TailSpin
+                height="25"
+                width="25"
+                color="#23c55e"
+                ariaLabel="tail-spin-loading"
+                radius="2"
+                wrapperStyle={{ display: "inline-block" }}
+                visible={true}
+              />
+            ) : (
+              <p>Log-in</p>
+            )}
           </button>
         </form>
         <button

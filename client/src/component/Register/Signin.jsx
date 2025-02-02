@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
+import { TailSpin } from "react-loader-spinner";
 
 function Signin() {
   const navigateToHome = useNavigate();
@@ -12,6 +13,7 @@ function Signin() {
     email: "",
     password: "",
   });
+  const [load, setLoad] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,6 +21,7 @@ function Signin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoad(true);
     axios
       .post("https://blogapi-sooty.vercel.app/register/signup", formData)
       .then((response) => {
@@ -28,9 +31,11 @@ function Signin() {
         setFormData({ name: "", email: "", password: "" });
         toast.success("Sign-in successfully!");
         navigateToHome("/home");
+        setLoad(false);
       })
       .catch((error) => {
         toast.error("Username or E-mail already existed");
+        setLoad(false);
       });
   };
 
@@ -84,7 +89,19 @@ function Signin() {
             type="submit"
             className="font-worksans  py-[0.6rem] bg-gradient-to-r from-lightBlack via-blue-800 to-lightBlack  rounded-lg w-full hover:bg-blue-700 text-white  px-4  focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Sign-in
+            {load ? (
+              <TailSpin
+                height="25"
+                width="25"
+                color="#23c55e"
+                ariaLabel="tail-spin-loading"
+                radius="2"
+                wrapperStyle={{ display: "inline-block" }}
+                visible={true}
+              />
+            ) : (
+              <p>Sign-in</p>
+            )}
           </button>
         </form>
         <button
