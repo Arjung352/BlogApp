@@ -145,4 +145,20 @@ router.post("/like-blog/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+//Adding route of tag to filter out blogs easily!
+router.get("/get-tags", async (req, res) => {
+  try {
+    const tags = await Blog.aggregate([
+      { $unwind: "$tag" },
+      { $group: { _id: "$tag" } },
+      { $sort: { _id: 1 } },
+    ]);
+
+    res.status(200).json({ tags: tags.map((t) => t._id) });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
