@@ -5,13 +5,13 @@ const { storage } = require("../cloudinaryConfig");
 const Blog = require("../model/blog");
 const User = require("../model/user");
 const blog = require("../model/blog");
-const { cloudinary } = require("../cloudinaryConfig"); // Ensure you have configured Cloudinary
+const { cloudinary } = require("../cloudinaryConfig");
 
 const upload = multer({ storage });
 // Creating a new blog
 router.post("/create-blog", upload.single("img"), async (req, res) => {
   try {
-    const { title, desc, username } = req.body;
+    const { title, desc, username, tag } = req.body;
 
     // Find the user by username
     const user = await User.findOne({ username });
@@ -29,6 +29,7 @@ router.post("/create-blog", upload.single("img"), async (req, res) => {
       title,
       desc,
       userName: username,
+      tag: tag,
       img: imgUrl, // Store the Cloudinary image URL
       createdBy: user._id, // Reference the user who created the blog
     });
@@ -144,5 +145,4 @@ router.post("/like-blog/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
 module.exports = router;
