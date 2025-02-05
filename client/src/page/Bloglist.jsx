@@ -17,12 +17,19 @@ const Bloglist = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [tag, setTag] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("All");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const getTags = await axios.get(
+          "https://blogapi-sooty.vercel.app/blog/get-tags"
+        );
         const response = await axios.get(
           "https://blogapi-sooty.vercel.app/blog/display-all"
         );
+        setTag(getTags.data.tags);
         setData(response.data.data);
         setFilteredData(response.data.data);
       } catch (error) {
@@ -91,6 +98,16 @@ const Bloglist = () => {
       toast.error("Failed to delete the blog");
     }
   };
+  // handling filtering through tag
+  const handleTagClick = (tag) => {
+    setSelectedTag(tag);
+    if (tag === "All") {
+      setFilteredData(data); // Show all blogs
+    } else {
+      setFilteredData(data.filter((blog) => blog.tag === tag)); // Filter by tag
+    }
+  };
+
   const redirectToAbout = () => {
     navigate("/aboutme");
   };
@@ -115,7 +132,7 @@ const Bloglist = () => {
       </div>
       <div className="backGround-Gradient-Light pt-10">
         <div className="flex justify-center  items-center relative  ">
-          <form className=" w-full relative flex justify-center">
+          <form className=" w-full flex justify-center">
             <input
               type="text"
               value={search}
@@ -125,6 +142,31 @@ const Bloglist = () => {
             />
             <SearchIcon className=" relative top-2 right-[2rem]  text-gray-500 w-5 h-5" />
           </form>
+        </div>
+        <div className="ml-10 mt-5 flex gap-4 flex-wrap">
+          <button
+            onClick={() => handleTagClick("All")}
+            className={`mt-3 py-1 cursor-pointer bg-gradient-to-r border-none   w-fit text-white px-3 ml-2 rounded-2xl capitalize font-worksans font-medium ${
+              selectedTag === "All"
+                ? "from-slate-800 via-slate-600 to-slate-800"
+                : "from-lightBlack via-slate-800 to-lightBlack"
+            }`}
+          >
+            All
+          </button>
+          {tag.map((tags, index) => (
+            <button
+              key={index}
+              onClick={() => handleTagClick(tags)}
+              className={`mt-3 py-1 cursor-pointer bg-gradient-to-r border-none  from-lightBlack via-slate-800 to-lightBlack w-fit text-white px-3 ml-2 rounded-2xl capitalize font-worksans font-medium ${
+                selectedTag === tags
+                  ? "from-slate-800 via-slate-600 to-slate-800"
+                  : "from-lightBlack via-slate-800 to-lightBlack"
+              }`}
+            >
+              {tags}
+            </button>
+          ))}
         </div>
         {filteredData && filteredData.length > 0 && (
           <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4  mt-8">
@@ -143,8 +185,8 @@ const Bloglist = () => {
                 >
                   {blog.title}
                 </Link>
-                <p className="mt-3 bg-gradient-to-r from-slate-600 to-slate-700   w-fit text-white px-3 ml-2 rounded-xl  capitalize font-worksans font-medium">
-                  Technology
+                <p className="mt-3 bg-gradient-to-r from-lightBlack via-slate-800 to-lightBlack w-fit text-white px-3 ml-2 rounded-xl  capitalize font-worksans font-medium">
+                  {blog.tag}
                 </p>
                 <div className="flex items-center gap-2 my-2 justify-between">
                   <div className="flex items-center gap-2 my-2">

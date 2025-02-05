@@ -141,7 +141,7 @@ const Create = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="w-3/4 mt-20 font-worksans  py-[0.6rem] bg-gradient-to-r from-lightBlack via-blue-800 to-lightBlack text-white  rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-3/4 max-[353px]:mt-32  mt-20 font-worksans  py-[0.6rem] bg-gradient-to-r from-lightBlack via-blue-800 to-lightBlack text-white  rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 Submit
               </button>
