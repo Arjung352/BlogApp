@@ -12,6 +12,7 @@ const Create = () => {
   const [load, setload] = useState(true);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [tag, setTag] = useState("");
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -36,6 +37,7 @@ const Create = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", body);
+    formData.append("tag", tag);
     if (image) {
       formData.append("img", image);
     }
@@ -75,7 +77,7 @@ const Create = () => {
             <input
               type="text"
               placeholder="Title"
-              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mb-4 border bg-transparent border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               required
@@ -118,6 +120,15 @@ const Create = () => {
                 <p className="text-blue-500">Browse files</p>
               </div>
             </div>
+            <label className="block text-lg font-semibold mb-4">Blog Tag</label>
+            <input
+              type="text"
+              placeholder="Blog Tag"
+              className="w-full p-2 mb-4 border bg-transparent border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setTag(e.target.value)}
+              value={tag}
+              required
+            />
             <label className="block text-lg font-semibold mb-4">Content</label>
             <ReactQuill
               name="content"
