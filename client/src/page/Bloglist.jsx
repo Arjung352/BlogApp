@@ -11,6 +11,7 @@ import Footer from "./Footer/Footer";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SearchIcon from "@mui/icons-material/Search";
+import ReactPaginate from "react-paginate";
 
 const Bloglist = () => {
   const navigate = useNavigate();
@@ -19,7 +20,12 @@ const Bloglist = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [tag, setTag] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All");
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const width = window.innerWidth;
+  let itemsPerPage = 8;
+  if (width < 768) {
+    itemsPerPage = 4;
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -108,6 +114,14 @@ const Bloglist = () => {
     }
   };
 
+  const offset = currentPage * itemsPerPage;
+  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
   const redirectToAbout = () => {
     navigate("/aboutme");
   };
@@ -160,7 +174,7 @@ const Bloglist = () => {
               onClick={() => handleTagClick(tags)}
               className={`mt-3 py-1 cursor-pointer bg-gradient-to-r border-none  from-lightBlack via-slate-800 to-lightBlack w-fit text-white px-3 ml-2 rounded-2xl capitalize font-worksans font-medium ${
                 selectedTag === tags
-                  ? "from-slate-800 via-slate-600 to-slate-800"
+                  ? "from-gray-800 via-slate-500 to-gray-800"
                   : "from-lightBlack via-slate-800 to-lightBlack"
               }`}
             >
@@ -168,9 +182,9 @@ const Bloglist = () => {
             </button>
           ))}
         </div>
-        {filteredData && filteredData.length > 0 && (
+        {currentData && currentData.length > 0 && (
           <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4  mt-8">
-            {filteredData.map((blog, index) => (
+            {currentData.map((blog, index) => (
               <div
                 key={index}
                 className="flex flex-col  mb-8 justify-end rounded-2xl hover:scale-105 transition-all ease-in-out duration-300 p-4 mx-4"
@@ -233,7 +247,7 @@ const Bloglist = () => {
           </div>
         )}
 
-        {filteredData && filteredData.length === 0 && (
+        {currentData && currentData.length === 0 && (
           <div className="w-full pb-16 grid grid-cols-3 gap-4 mt-10  max-md:grid-cols-2 max-sm:grid-cols-1 flex-col px-4 h-1/3 ">
             <div>
               <Skeleton className="mb-4 h-10  " />
@@ -249,6 +263,26 @@ const Bloglist = () => {
             </div>
           </div>
         )}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"flex justify-center gap-1 mb-4 flex-wrap mt-6"}
+          pageClassName={
+            "px-3 py-2 shadow-stone-500 rounded-xl shadow-md  mx-1"
+          }
+          activeClassName={"bg-gray-300"}
+          previousClassName={
+            "px-3 py-2 shadow-stone-500 rounded-xl shadow-md  mx-1"
+          }
+          nextClassName={
+            "px-3 py-2 shadow-stone-500 rounded-xl shadow-md  mx-1"
+          }
+        />
         <Footer />
       </div>
 
