@@ -172,9 +172,9 @@ const Bloglist = () => {
             <button
               key={index}
               onClick={() => handleTagClick(tags)}
-              className={`mt-3 py-1 cursor-pointer bg-gradient-to-r border-none  from-lightBlack via-slate-800 to-lightBlack w-fit text-white px-3 ml-2 rounded-2xl capitalize font-worksans font-medium ${
+              className={`mt-3 py-1 cursor-pointer bg-gradient-to-r border-none w-fit text-white px-3 ml-2 rounded-2xl capitalize font-worksans font-medium ${
                 selectedTag === tags
-                  ? "from-gray-800 via-slate-500 to-gray-800"
+                  ? "from-gray-800 via-slate-500 to-gray-800 !important"
                   : "from-lightBlack via-slate-800 to-lightBlack"
               }`}
             >
