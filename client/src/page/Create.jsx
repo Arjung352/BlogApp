@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast, Toaster } from "react-hot-toast";
 import ReactQuill from "react-quill";
@@ -6,15 +6,24 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import Footer from "./Footer/Footer";
+import { Autocomplete, TextField } from "@mui/material";
 
 const Create = () => {
   const redirect = useNavigate();
   const [load, setload] = useState(true);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [tag, setTag] = useState("");
+  const [currTag, setCurrTag] = useState("");
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [tag, setTag] = useState([]);
+
+  const editorStyle = {
+    minHeight: "100px",
+    maxHeight: "500px",
+    height: "auto",
+    overflowY: "auto",
+  };
 
   // Handle file upload and preview
   const handleCoverImg = (e) => {
@@ -37,7 +46,7 @@ const Create = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", body);
-    formData.append("tag", tag);
+    formData.append("tag", currTag);
     if (image) {
       formData.append("img", image);
     }
@@ -51,7 +60,7 @@ const Create = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
       // Handle successful response
       toast.success("Blog created successfully!");
@@ -61,6 +70,21 @@ const Create = () => {
       toast.error("Failed to create blog. Please try again.");
     }
   };
+
+  useEffect(() => {
+    // getting all the tags from the backend
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get(
+          "https://blogapi-sooty.vercel.app/blog/get-tags",
+        );
+        setTag(response.data.tags);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+    fetchTags();
+  }, []);
 
   return load ? (
     <div className="backGround-Gradient-Light ">
@@ -121,22 +145,23 @@ const Create = () => {
               </div>
             </div>
             <label className="block text-lg font-semibold mb-4">Blog Tag</label>
-            <input
-              type="text"
-              placeholder="Blog Tag"
-              className="w-full p-2 mb-4 border bg-transparent border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => setTag(e.target.value)}
-              value={tag}
-              required
+            <Autocomplete
+              options={tag}
+              value={currTag}
+              onChange={(event, newValue) => setCurrTag(newValue)}
+              renderInput={(params) => (
+                <TextField {...params} label="Select a Tag" />
+              )}
             />
-            <label className="block text-lg font-semibold mb-4">Content</label>
+
+            <label className="block text-lg font-semibold my-4">Content</label>
             <ReactQuill
               name="content"
               theme="snow"
               value={body}
               required
               onChange={(content) => setBody(content)}
-              style={{ height: "100px" }}
+              style={editorStyle}
             />
             <div className="flex justify-center">
               <button

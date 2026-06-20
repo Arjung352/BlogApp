@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import PersonIcon from "@mui/icons-material/Person";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import Footer from "./Footer/Footer";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 const ShowBlog = () => {
-  const [blog, setblogs] = useState([]);
+  const [blog, setblogs] = useState({});
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     const fetch = (async () => {
       let data = await axios.get(
-        `https://blogapi-sooty.vercel.app/blog/show/${id}`
+        `https://blogapi-sooty.vercel.app/blog/show/${id}`,
       );
       console.log(data.data);
       setblogs(data.data);
@@ -41,9 +41,15 @@ const ShowBlog = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-4 capitalize">
               {blog.title}
             </h1>
-            <div
-              className="text-gray-700 leading-relaxed mb-6"
+            {/* <div
+              className="text-gray-700 leading-relaxed  mb-6"
               dangerouslySetInnerHTML={{ __html: blog.desc }}
+            /> */}
+            <ReactQuill
+              value={blog.desc}
+              readOnly
+              theme="bubble"
+              modules={{ toolbar: false }}
             />
           </div>
         </div>

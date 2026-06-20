@@ -20,7 +20,9 @@ const Bloglist = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [tag, setTag] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All");
+  const [showAllTags, setShowAllTags] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const width = window.innerWidth;
   let itemsPerPage = 8;
   if (width < 768) {
@@ -28,18 +30,21 @@ const Bloglist = () => {
   }
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const getTags = await axios.get(
-          "https://blogapi-sooty.vercel.app/blog/get-tags"
+          "https://blogapi-sooty.vercel.app/blog/get-tags",
         );
         const response = await axios.get(
-          "https://blogapi-sooty.vercel.app/blog/display-all"
+          "https://blogapi-sooty.vercel.app/blog/display-all",
         );
         setTag(getTags.data.tags);
         setData(response.data.data);
         setFilteredData(response.data.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -48,8 +53,8 @@ const Bloglist = () => {
   useEffect(() => {
     setFilteredData(
       data.filter((blog) =>
-        blog.title.toLowerCase().includes(search.toLowerCase())
-      )
+        blog.title.toLowerCase().includes(search.toLowerCase()),
+      ),
     );
   }, [search, data]);
 
@@ -67,7 +72,7 @@ const Bloglist = () => {
 
       const response = await axios.post(
         `https://blogapi-sooty.vercel.app/blog/like-blog/${id}`,
-        { username }
+        { username },
       );
 
       if (response.status === 200) {
@@ -96,7 +101,7 @@ const Bloglist = () => {
         `https://blogapi-sooty.vercel.app/blog/delete-blog/${id}`,
         {
           data: { username },
-        }
+        },
       );
       toast.success("Blog deleted successfully");
       setData(data.filter((blog) => blog._id !== id));
@@ -168,7 +173,7 @@ const Bloglist = () => {
           >
             All
           </button>
-          {tag.map((tags, index) => (
+          {tag.slice(0, showAllTags ? tag.length : 4).map((tags, index) => (
             <button
               key={index}
               onClick={() => handleTagClick(tags)}
@@ -181,6 +186,15 @@ const Bloglist = () => {
               {tags}
             </button>
           ))}
+          {tag.length > 4 && (
+            <button
+              type="button"
+              onClick={() => setShowAllTags((prev) => !prev)}
+              className="mt-3 py-1 cursor-pointer border border-blue-500 bg-blue-50 text-blue-700 px-3 ml-2 rounded-2xl capitalize font-worksans font-medium"
+            >
+              {showAllTags ? "Show less" : `${tag.length - 4} more`}
+            </button>
+          )}
         </div>
         {currentData && currentData.length > 0 && (
           <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4  mt-8">
@@ -246,11 +260,10 @@ const Bloglist = () => {
             ))}
           </div>
         )}
-
-        {currentData && currentData.length === 0 && (
-          <div className="w-full pb-16 grid grid-cols-3 gap-4 mt-10  max-md:grid-cols-2 max-sm:grid-cols-1 flex-col px-4 h-1/3 ">
+        {isLoading ? (
+          <div className="w-full pb-16 grid grid-cols-3 gap-4 mt-10 max-md:grid-cols-2 max-sm:grid-cols-1 flex-col px-4 h-1/3">
             <div>
-              <Skeleton className="mb-4 h-10  " />
+              <Skeleton className="mb-4 h-10" />
               <Skeleton count={5} />
             </div>
             <div className="max-sm:hidden">
@@ -262,6 +275,14 @@ const Bloglist = () => {
               <Skeleton count={5} />
             </div>
           </div>
+        ) : (
+          filteredData.length === 0 && (
+            <div className="flex justify-center items-center h-96">
+              <p className="text-3xl font-semibold text-gray-500">
+                No blogs found.
+              </p>
+            </div>
+          )
         )}
         <ReactPaginate
           previousLabel={"Previous"}
