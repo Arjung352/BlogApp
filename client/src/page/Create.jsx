@@ -13,9 +13,9 @@ const Create = () => {
   const [load, setload] = useState(true);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [currTag, setCurrTag] = useState("");
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [currTag, setCurrTag] = useState("");
   const [tag, setTag] = useState([]);
 
   const editorStyle = {
@@ -51,6 +51,7 @@ const Create = () => {
       formData.append("img", image);
     }
     formData.append("username", localStorage.getItem("username"));
+    console.log("Form Data entries:", [...formData.entries()]);
     setload(false);
     try {
       const response = await axios.post(
@@ -68,6 +69,7 @@ const Create = () => {
     } catch (error) {
       console.error("Error creating blog:", error);
       toast.error("Failed to create blog. Please try again.");
+      setload(true);
     }
   };
 
@@ -146,9 +148,17 @@ const Create = () => {
             </div>
             <label className="block text-lg font-semibold mb-4">Blog Tag</label>
             <Autocomplete
+              freeSolo
               options={tag}
-              value={currTag}
-              onChange={(event, newValue) => setCurrTag(newValue)}
+              inputValue={currTag}
+              onInputChange={(event, newValue) => {
+                setCurrTag(newValue);
+              }}
+              onChange={(event, newValue) => {
+                if (typeof newValue === "string" && !tag.includes(newValue)) {
+                  setTag((prev) => [...prev, newValue]);
+                }
+              }}
               renderInput={(params) => (
                 <TextField {...params} label="Select a Tag" />
               )}
@@ -159,7 +169,7 @@ const Create = () => {
               name="content"
               theme="snow"
               value={body}
-              required
+              required={true}
               onChange={(content) => setBody(content)}
               style={editorStyle}
             />

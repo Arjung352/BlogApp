@@ -55,15 +55,17 @@ function About() {
                   Who am I
                 </h1>
                 <p className="text-base sm:text-lg leading-relaxed text-left">
-                  Full Stack Web Developer with a passion for building dynamic
-                  and responsive web applications. Skilled in FRONT-END
-                  technologies such as HTML, CSS, JavaScript, and ReactJS, as
-                  well as BACK-END technologies including Node.js, Firebase,
-                  PHP, Express.js, My-SQL and MongoDB. Comfortable working with
-                  frameworks and libraries like Bootstrap, Material-UI, and
-                  Tailwind CSS. Dedicated to continuous learning and staying
-                  up-to-date with the latest industry trends. Let's connect and
-                  create innovative solutions together!
+                  I’m a Software Engineer who enjoys turning ideas into
+                  functional, user-friendly web applications.
+                  <br />I have experience working across the full stack using
+                  technologies like React.js, Next.js, TypeScript, Node.js,
+                  Express.js, PostgreSQL, and MongoDB, along with modern UI
+                  tools like Tailwind CSS and Material UI. <br />
+                  Currently, I’m learning DevOps fundamentals to gain a better
+                  understanding of scalable systems and deployment workflows.{" "}
+                  <br />I believe growth comes from building, breaking, and
+                  learning continuously. Open to opportunities, collaboration,
+                  and meaningful projects. !
                 </p>
               </div>
 
