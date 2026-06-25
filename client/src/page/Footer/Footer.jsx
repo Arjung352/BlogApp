@@ -28,7 +28,7 @@ function Footer() {
               <Link className="mt-3" to="/aboutme">
                 About
               </Link>
-              <Link to="/home">All Blogs</Link>
+              <Link to="/">All Blogs</Link>
               <Link to="/create">Create a Blog</Link>
             </div>
           </div>
@@ -69,7 +69,7 @@ function Footer() {
             </div>
           </div>
           <p className=" max-md:text-center md:absolute md:left-[33rem] md:top-2 text-gray-600">
-            &copy; 2025 All Rights Reserved | DotBlog
+            &copy; 2026 All Rights Reserved | DotBlog
           </p>
           <div></div>
         </div>

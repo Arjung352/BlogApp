@@ -16,11 +16,14 @@ const EditBlog = lazy(() => import("./page/Edit"));
 function App() {
   //Setting redirect logic
   const [load, loadingServer] = useState(false);
+  // cannot access login and signin page if user is already logged in
   const redirect = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("username")) {
-      redirect("/home");
-    } else {
+    if (
+      localStorage.getItem("username") &&
+      (window.location.pathname === "/login" ||
+        window.location.pathname === "/signIn")
+    ) {
       redirect("/");
     }
   }, []);
@@ -28,7 +31,7 @@ function App() {
   useEffect(() => {
     const loadServer = (async () => {
       await axios.get(
-        "https://blogapi-sooty.vercel.app/blog/show/66e33506312b13bc9c0fcb8b"
+        "https://blogapi-sooty.vercel.app/blog/show/66e33506312b13bc9c0fcb8b",
       );
       loadingServer(true);
     })();
@@ -53,10 +56,10 @@ function App() {
           }
         >
           <Routes>
-            <Route index element={<Signin />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navbar />}>
-              <Route path="home" element={<Bloglist />} />
+              <Route path="/signIn" element={<Signin />} />
+              <Route path="/login" element={<Login />} />
+              <Route index element={<Bloglist />} />
               <Route path="show/:id" element={<ShowBlog />} />
               <Route path="edit-blog/:id" element={<EditBlog />} />
               <Route path="create" element={<Create />} />

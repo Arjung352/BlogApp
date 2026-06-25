@@ -64,6 +64,10 @@ const Bloglist = () => {
       const username = localStorage.getItem("username");
       const blog = data.find((blog) => blog._id === id);
 
+      if (!userId || !username) {
+        toast.error("You need to be logged in to like a blog");
+        return;
+      }
       // Check if the user has already liked the blog
       if (blog.likes.includes(userId)) {
         toast.error("You have already liked this blog");

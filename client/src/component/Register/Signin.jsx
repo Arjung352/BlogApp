@@ -30,7 +30,7 @@ function Signin() {
         localStorage.setItem("_id", response.data._id);
         setFormData({ name: "", email: "", password: "" });
         toast.success("Sign-in successfully!");
-        navigateToHome("/home");
+        navigateToHome("/");
         setLoad(false);
       })
       .catch((error) => {

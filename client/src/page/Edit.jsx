@@ -16,7 +16,7 @@ const EditBlog = () => {
     const fetchBlogData = async () => {
       try {
         const response = await axios.get(
-          `https://blogapi-sooty.vercel.app/blog/show/${id}`
+          `https://blogapi-sooty.vercel.app/blog/show/${id}`,
         );
         const data = response.data;
         console.log(data);
@@ -38,10 +38,10 @@ const EditBlog = () => {
         {
           title,
           desc,
-        }
+        },
       );
       console.log(title, desc);
-      navigate("/home"); // Redirect to home after successful update
+      navigate("/"); // Redirect to home after successful update
     } catch (error) {
       console.error("Failed to update blog:", error);
     }

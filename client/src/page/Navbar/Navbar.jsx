@@ -10,10 +10,10 @@ function Navbar() {
   const redirect = useNavigate();
   const handleSignOut = () => {
     localStorage.clear();
-    redirect("/");
+    redirect("/signIn");
   };
   const handleRedirectToHome = () => {
-    redirect("/home");
+    redirect("/");
   };
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -58,7 +58,7 @@ function Navbar() {
           <ul className="text-white text-2xl ml-4 flex flex-col gap-3 font-worksans">
             <li className="mb-5">
               <NavLink
-                to={"/home"}
+                to={"/"}
                 onClick={handleNavbar}
                 className="flex gap-2 items-center"
               >
@@ -94,7 +94,7 @@ function Navbar() {
             onClick={handleSignOut}
             className="mb-4 ml-4 px-4 py-2 font-worksans rounded-md text-white bg-gradient-to-r from-lightBlack to-blue-800"
           >
-            Sign-Out
+            {`${localStorage.getItem("username") ? `Sign-Out` : "Sign-In"}`}
           </button>
         </div>
       </div>
@@ -116,7 +116,7 @@ function Navbar() {
           <li>
             <NavLink
               className=" hover:text-lightBlue hover:underline hover:transition-shadow duration-300 flex gap-3 items-center"
-              to={"/home"}
+              to={"/"}
             >
               <FormatListBulletedIcon />
               All Blogs
@@ -148,7 +148,7 @@ function Navbar() {
             onClick={handleSignOut}
             className="px-4 py-2 rounded-md bg-lightBlue text-white  bg-gradient-to-r  from-lightBlack to-blue-800"
           >
-            Sign-Out
+            {`${localStorage.getItem("username") ? `Sign-Out` : "Sign-In"}`}
           </button>
         </div>
         <button

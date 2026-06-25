@@ -26,7 +26,7 @@ function Login() {
         localStorage.setItem("_id", response.data._id);
         setFormData({ username: "", password: "" });
         toast.success("Login succesfully!");
-        redirectToHome("/home");
+        redirectToHome("/");
         setLoad(false);
       })
       .catch((error) => {
@@ -37,7 +37,7 @@ function Login() {
   };
   const navigate = useNavigate();
   const signup = () => {
-    navigate("/");
+    navigate("/signIn");
   };
   return (
     <div className="flex items-center justify-center h-svh backGround-Gradient-Light">

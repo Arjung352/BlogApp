@@ -42,6 +42,16 @@ const Create = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    // check if the user is logged in or not
+    if (!localStorage.getItem("username")) {
+      toast.error("Please login to create a blog");
+      return;
+    }
+    // if title or body is empty then show error
+    if (!title || !body || !currTag) {
+      toast.error("Please fill all the fields");
+      return;
+    }
     // Create form data to handle file upload
     const formData = new FormData();
     formData.append("title", title);
@@ -65,7 +75,7 @@ const Create = () => {
       );
       // Handle successful response
       toast.success("Blog created successfully!");
-      redirect("/home"); // Redirect to homepage or another page after successful submission
+      redirect("/"); // Redirect to homepage or another page after successful submission
     } catch (error) {
       console.error("Error creating blog:", error);
       toast.error("Failed to create blog. Please try again.");
